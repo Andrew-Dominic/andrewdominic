@@ -80,9 +80,12 @@ export default function ContactFooter() {
 
   return (
     <footer id="contact" ref={sectionRef} className="bg-white px-6 md:px-16 pt-32 md:pt-48 pb-12 overflow-hidden relative">
-      {/* Background watermark */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.015] select-none">
-        <h2 className="text-[25vw] font-poster font-bold leading-none whitespace-nowrap tracking-[-0.05em] uppercase">CONNECT</h2>
+      {/* Background watermark — meaningful, aligned with theme */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.018] select-none">
+        <h2 className="text-[25vw] font-poster font-bold leading-none whitespace-nowrap tracking-[-0.05em] uppercase">BUILD</h2>
+      </div>
+      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.012] select-none">
+        <h2 className="text-[25vw] font-poster font-bold leading-none whitespace-nowrap tracking-[-0.05em] uppercase">BUILD</h2>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -90,27 +93,30 @@ export default function ContactFooter() {
         <div className="hard-rule mb-8" />
 
         <div className="flex flex-col lg:flex-row justify-between items-start gap-16 md:gap-24 mb-32 md:mb-48">
-          {/* LEFT — Massive CTA */}
+          {/* LEFT — Statement */}
           <div className="contact-headline flex-1">
             <div className="flex items-center gap-4 mb-8">
               <span className="spec-label text-grit-400">004 // TERMINAL</span>
               <div className="h-px w-16 bg-accent" />
             </div>
 
-            <h2 className="text-6xl md:text-9xl lg:text-[11rem] font-poster font-bold tracking-[-0.04em] leading-[0.82] uppercase mb-12 md:mb-16">
-              LET'S<br /><span className="text-accent">BUILD</span><br />REALITY.
+            <h2 className="text-6xl md:text-9xl lg:text-[11rem] font-poster font-bold tracking-[-0.05em] leading-[0.82] uppercase mb-14 md:mb-18">
+              LET'S<br /><span className="text-accent">BUILD</span><br />SOMETHING<br />REAL.
             </h2>
 
             <div className="max-w-md">
               <div className="hard-rule-light mb-6" />
-              <p className="text-lg md:text-xl font-body text-grit-600 leading-snug tracking-tight">
-                Seeking high-ticket partnerships, Digital Product Architect roles, and architectural challenges.
+              <p className="text-lg md:text-xl font-body text-grit-900 leading-snug tracking-tight mb-2">
+                Built for real users.
+              </p>
+              <p className="text-base md:text-lg font-body text-grit-500 leading-relaxed tracking-tight">
+                Open to meaningful work — products, systems, and ideas that actually matter.
               </p>
             </div>
           </div>
 
-          {/* RIGHT — Contact Terminal */}
-          <div className="contact-box flex-1 w-full lg:max-w-md">
+          {/* RIGHT — Contact Terminal (sticky) */}
+          <div className="contact-box flex-1 w-full lg:max-w-md lg:sticky lg:top-24 self-start">
             <div className="border border-grit-900 bg-grit-900 text-white relative overflow-hidden">
               <div className="absolute inset-0 grit-texture opacity-30 pointer-events-none" />
 
@@ -121,17 +127,17 @@ export default function ContactFooter() {
                   <div className="w-2 h-2 rounded-full bg-white/10" />
                   <div className="w-2 h-2 rounded-full bg-white/10" />
                 </div>
-                <span className="spec-label text-white/20">TRANSMISSION_CENTER</span>
+                <span className="spec-label text-white/20">TRANSMISSION_TERMINAL</span>
                 <Globe className="w-3.5 h-3.5 text-white/10" />
               </div>
 
               <div className="relative z-10 p-6 md:p-8 space-y-8">
-                {/* Email */}
-                <a href="mailto:m.andrewdominic9b@gmail.com" className="block group/link py-4 border-b border-white/5">
+                {/* Email — bigger + brighter */}
+                <a href="mailto:m.andrewdominic9@gmail.com" className="block group/link py-4 border-b border-white/5">
                   <p className="spec-label text-white/20 mb-2">DIRECT_CHANNEL://</p>
                   <div className="flex items-center justify-between gap-4">
-                    <span className="text-base md:text-xl font-poster font-bold tracking-normal group-hover/link:text-accent transition-colors truncate">
-                      m.andrewdominic9b@gmail.com
+                    <span className="text-lg md:text-2xl font-poster font-bold tracking-normal text-white group-hover/link:text-accent transition-colors truncate">
+                      m.andrewdominic9@gmail.com
                     </span>
                     <ArrowRight className="w-5 h-5 flex-shrink-0 opacity-0 -translate-x-3 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-500 text-accent" />
                   </div>
@@ -161,15 +167,18 @@ export default function ContactFooter() {
                   whileTap={{ scale: 0.99 }}
                   className="w-full py-4 bg-accent text-white font-poster font-bold tracking-[0.2em] uppercase text-xs flex items-center justify-center gap-3 hover:bg-white hover:text-grit-900 transition-colors duration-300"
                 >
-                  BOOK A CALL <ArrowRight className="w-4 h-4" />
+                  START A CONVERSATION <ArrowRight className="w-4 h-4" />
                 </motion.button>
-              </div>
-            </div>
 
-            {/* Under-box metadata */}
-            <div className="mt-4 flex items-center gap-3">
-              <div className="w-1.5 h-1.5 bg-accent animate-pulse" />
-              <span className="spec-label text-grit-300">RESPONSE_TIME: &lt; 24HRS</span>
+                {/* Trust signals */}
+                <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-accent animate-pulse" />
+                    <span className="spec-label text-white/25">RESPONSE_TIME: &lt; 24H</span>
+                  </div>
+                  <span className="spec-label text-white/25">REAL_WORK_ONLY</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -180,35 +189,21 @@ export default function ContactFooter() {
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Left — Copyright */}
-            <div className="flex items-center gap-4 md:gap-6">
-              <span className="text-[0.55rem] font-header font-bold tracking-[0.3em] uppercase text-grit-900">
-                © {currentYear} ADM
-              </span>
-              <div className="h-3 w-px bg-grit-200" />
-              <span className="text-[0.55rem] font-header font-bold tracking-[0.3em] uppercase text-grit-300">
-                BUILD_REF // V4.3.0
-              </span>
-            </div>
+            <span className="text-[0.55rem] font-header font-bold tracking-[0.3em] uppercase text-grit-900">
+              © {currentYear} ANDREW DOMINIC M
+            </span>
 
-            {/* Center — Status */}
-            <div className="flex items-center gap-3">
+            {/* Center — Build Ref */}
+            <span className="text-[0.55rem] font-header font-bold tracking-[0.3em] uppercase text-grit-300">
+              BUILD_REF // V4.3
+            </span>
+
+            {/* Right — Status */}
+            <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
               <span className="text-[0.55rem] font-header font-bold tracking-[0.4em] uppercase text-grit-400">
-                STANDBY_ACTIVE
+                STATUS: ACTIVE
               </span>
-            </div>
-
-            {/* Right — Social links */}
-            <div className="flex items-center gap-1">
-              {["LinkedIn", "Instagram", "GitHub"].map((social, i) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="text-[0.55rem] font-header font-bold tracking-[0.15em] px-3 py-1.5 uppercase text-grit-400 hover:text-grit-900 transition-colors"
-                >
-                  {social}
-                </a>
-              ))}
             </div>
           </div>
         </div>

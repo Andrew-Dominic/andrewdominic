@@ -1,4 +1,4 @@
-# Andrew Dominic M — Digital Product Architect
+# Andrew Dominic M — Product-Focused Developer
 
 A high-performance portfolio built with a Swiss-Brutalist aesthetic, focusing on extreme performance, architectural clarity, and premium interactions.
 

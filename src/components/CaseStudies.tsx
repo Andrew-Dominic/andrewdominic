@@ -10,32 +10,32 @@ const projects = [
     id: "shitha",
     num: "01",
     title: "Shitha\nClothing",
-    tags: ["E-COMMERCE", "NEXT.JS", "MONGODB", "REDIS"],
-    description: "A production e-commerce platform for a 100K-audience fashion brand with order tracking, invoice generation, email automation, and real payment flows.",
+    tags: ["E-COMMERCE", "SYSTEM SCALE", "PAYMENT FLOWS"],
+    description: "Built and deployed a production e-commerce system for a 100K audience brand — managing payments, performance, and server infrastructure on a dedicated VPS to ensure reliability under real traffic.",
     image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=700&h=1000&fit=crop&q=80",
   },
   {
     id: "yatra",
     num: "02",
     title: "Yatra\n2026",
-    tags: ["EVENT SYSTEMS", "SUPABASE", "REACT NATIVE", "QR SCANNER"],
-    description: "Fully replaced manual ticketing for a 3,000+ attendee college fest. Zero duplicate entries on event day with real-time QR verification.",
+    tags: ["EVENT SYSTEMS", "REAL-TIME VERIFICATION", "SCALABLE TICKETING"],
+    description: "Designed a real-time ticketing system with QR verification — eliminating duplicate entries for 3,000+ attendees.",
     image: new URL("../assets/yatra_tn.png", import.meta.url).href,
   },
   {
     id: "isro",
     num: "03",
     title: "ISRO\nDrone",
-    tags: ["AUTONOMOUS", "PYTHON", "FLASK", "JETSON NANO"],
-    description: "Autonomous drone control without GPS — navigation intelligence bridging low-level computing with real-time dashboard controllers.",
+    tags: ["AUTONOMOUS", "ONBOARD INTELLIGENCE", "REAL-TIME CONTROL"],
+    description: "Built a GPS-independent drone system — solving real-time navigation using onboard intelligence and live control dashboards.",
     image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=700&h=1000&fit=crop&q=80",
   },
   {
     id: "sinclo",
     num: "04",
     title: "Synflow\nStudio",
-    tags: ["AGENCY", "FULL-STACK", "AI AUTOMATION", "CRM"],
-    description: "Co-founded a web and AI automation agency scaling digital operations for SMBs in India and Australia. Real business value for international clients.",
+    tags: ["DIGITAL SYSTEMS", "FULL-STACK", "AUTOMATION", "CLIENT WORK"],
+    description: "Co-founded a digital studio focused on building websites and automation systems for small businesses — helping streamline operations, manage leads, and improve client workflows.",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&h=1000&fit=crop&q=80",
   }
 ];
@@ -244,7 +244,7 @@ export default function CaseStudies() {
 
                   {/* CTA */}
                   <a href="#" className="inline-flex items-center gap-1.5 text-[0.55rem] font-header font-bold tracking-[0.25em] uppercase text-grit-900 border border-grit-900 px-4 py-2 hover:bg-grit-900 hover:text-white transition-all duration-300 group/btn">
-                    MORE INFO
+                    VIEW CASE STUDY
                     <ArrowUpRight className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>

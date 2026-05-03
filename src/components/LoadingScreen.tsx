@@ -81,7 +81,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
       <div className="absolute bottom-10 left-10 flex flex-col gap-1">
         <p className="font-header text-[0.6rem] font-bold tracking-[0.3em] uppercase text-grit-900/40">INITIALIZING_CORE_SYSTEM</p>
         <p className="font-header text-[0.6rem] font-bold tracking-[0.3em] uppercase text-grit-900/60">"BUILDING SYSTEMS THAT ACTUALLY WORK."</p>
-        <p className="font-header text-[0.6rem] font-bold tracking-[0.3em] uppercase text-grit-900/40">ROLE: DIGITAL PRODUCT ARCHITECT</p>
+        <p className="font-header text-[0.6rem] font-bold tracking-[0.3em] uppercase text-grit-900/40">ROLE: PRODUCT-FOCUSED DEVELOPER</p>
       </div>
       
       <div className="absolute top-10 right-10">

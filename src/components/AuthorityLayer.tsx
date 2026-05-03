@@ -11,7 +11,7 @@ const stats = [
   "WORKED WITH INTERNATIONAL CLIENTS",
 ];
 
-const manifestoLine = "BUILDING SYSTEMS THAT ACTUALLY WORK — NOT DEMO APPS — REAL BUSINESSES — REAL RESULTS — SHIP FAST — ";
+const manifestoLine = "BUILDING REAL SYSTEMS — NOT JUST PROJECTS — LEARNING BY SHIPPING — IMPROVING EVERY ITERATION — ";
 
 export default function AuthorityLayer() {
   const sectionRef = useRef<HTMLDivElement>(null);
