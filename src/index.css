@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Kanit:wght@700;800;900&family=Antonio:wght@700&display=swap');
+@import "tailwindcss";
+
+/* ── Lenis smooth scroll ── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-header: "Outfit", sans-serif;
+  --font-poster: "Antonio", sans-serif;
+  --font-old-poster: "Kanit", sans-serif;
+  --font-heading: "Instrument Serif", serif;
+  --font-body: "Barlow", sans-serif;
+  
+  --color-grit-900: #0a0a0a;
+  --color-grit-800: #171717;
+  --color-grit-700: #262626;
+  --color-grit-600: #404040;
+  --color-grit-500: #525252;
+  --color-grit-400: #737373;
+  --color-grit-300: #a3a3a3;
+  --color-grit-200: #e5e5e5;
+  --color-grit-100: #f5f5f5;
+  --color-grit-50: #fafafa;
+
+  --color-accent: #da2727;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-grit-900 bg-white font-sans;
+    cursor: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Prevent layout shift on scroll */
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+
+  /* GPU layer promotion for animated elements */
+  .will-change-transform {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimize images for compositing */
+  img {
+    content-visibility: auto;
+  }
+}
+
+/* ── Brutalist Utilities ── */
+
+.mask-negative {
+  mix-blend-mode: difference;
+  color: white;
+}
+
+.grit-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/baseFilter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+/* Inline noise overlay — no external fetch, GPU composited */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  /* Promote to own GPU layer — stops repaint cascading */
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* ── Marquee Animation ── */
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 30s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.marquee-track:hover,
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* ── Hard Rule Divider ── */
+
+.hard-rule {
+  height: 1px;
+  background: #0a0a0a;
+  width: 100%;
+}
+
+.hard-rule-light {
+  height: 1px;
+  background: #e5e5e5;
+  width: 100%;
+}
+
+.hard-rule-white {
+  height: 2px;
+  background: #ffffff;
+  width: 100%;
+}
+
+/* ── Spec Sheet Label ── */
+
+.spec-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.spec-label-white {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* ── Reduced motion accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-reverse {
+    animation: none !important;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
