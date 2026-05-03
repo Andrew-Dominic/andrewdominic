@@ -51,222 +51,232 @@ export default function CaseStudies() {
     const track = trackRef.current;
     const progressBar = progressRef.current;
     const counterEl = counterRef.current;
+    
     if (!section || !track) return;
 
-    const totalScrollWidth = track.scrollWidth - window.innerWidth;
+    let mm = gsap.matchMedia();
 
-    // Cache DOM queries — avoid querySelectorAll on every frame
-    const cards = track.querySelectorAll<HTMLElement>(".case-card");
-    const cardData = Array.from(cards).map((card) => ({
-      el: card,
-      title: card.querySelector<HTMLElement>(".card-title"),
-      photo: card.querySelector<HTMLElement>(".card-photo"),
-      meta: card.querySelector<HTMLElement>(".card-meta"),
-    }));
+    // Only apply horizontal scroll + parallax on desktop (>= 1024px)
+    mm.add("(min-width: 1024px)", () => {
+      const totalScrollWidth = track.scrollWidth - window.innerWidth;
 
-    let lastIndex = -1;
+      // Cache DOM queries for desktop cards
+      const cards = track.querySelectorAll<HTMLElement>(".desktop-card");
+      const cardData = Array.from(cards).map((card) => ({
+        el: card,
+        title: card.querySelector<HTMLElement>(".card-title"),
+        photo: card.querySelector<HTMLElement>(".card-photo"),
+        meta: card.querySelector<HTMLElement>(".card-meta"),
+      }));
 
-    const st = ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: () => `+=${totalScrollWidth}`,
-      pin: true,
-      scrub: 0.6,
-      invalidateOnRefresh: true,
-      anticipatePin: 1,
-      fastScrollEnd: true,
-      onUpdate: (self) => {
-        const progress = self.progress;
+      let lastIndex = -1;
 
-        // Move the track — single gsap.set call
-        gsap.set(track, { x: -totalScrollWidth * progress });
+      const st = ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: () => `+=${totalScrollWidth}`,
+        pin: true,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        fastScrollEnd: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
 
-        // Progress bar — direct transform for GPU acceleration
-        if (progressBar) {
-          progressBar.style.transform = `scaleX(${progress})`;
-        }
+          // Horizontal scroll the track
+          gsap.set(track, { x: -totalScrollWidth * progress });
 
-        // Counter update — direct DOM mutation, no React state
-        const newIndex = Math.min(
-          Math.floor(progress * projects.length),
-          projects.length - 1
-        );
-        const safeIndex = Math.max(0, newIndex);
-        if (safeIndex !== lastIndex && counterEl) {
-          lastIndex = safeIndex;
-          counterEl.textContent = `[ ${String(safeIndex + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")} ]`;
-        }
-
-        // ── Differential parallax physics ──
-        // Uses cached DOM refs — zero querySelectorAll per frame
-        for (let i = 0; i < cardData.length; i++) {
-          const { title, photo, meta } = cardData[i];
-
-          const cardCenter = projects.length > 1
-            ? i / (projects.length - 1)
-            : 0;
-          const delta = progress - cardCenter;
-
-          // Title: SLOWER — lags behind scroll direction
-          if (title) {
-            title.style.transform = `translateY(-45%) translate3d(${delta * -80}px, 0, 0)`;
+          // Progress bar
+          if (progressBar) {
+            progressBar.style.transform = `scaleX(${progress})`;
           }
 
-          // Photo: FASTER — pushes ahead in scroll direction
-          if (photo) {
-            const s = 1 - Math.abs(delta) * 0.015;
-            photo.style.transform = `translateY(-50%) translate3d(${delta * 160}px, 0, 0) scale(${s})`;
+          // Counter
+          const newIndex = Math.min(
+            Math.floor(progress * projects.length),
+            projects.length - 1
+          );
+          const safeIndex = Math.max(0, newIndex);
+          if (safeIndex !== lastIndex && counterEl) {
+            lastIndex = safeIndex;
+            counterEl.textContent = `[ ${String(safeIndex + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")} ]`;
           }
 
-          // Meta: follows photo with slight trail
-          if (meta) {
-            const opacity = Math.max(0.15, 1 - Math.abs(delta) * 1.2);
-            meta.style.transform = `translateY(-50%) translate3d(${delta * 120}px, 0, 0)`;
-            meta.style.opacity = String(opacity);
+          // Desktop Parallax Physics
+          for (let i = 0; i < cardData.length; i++) {
+            const { title, photo, meta } = cardData[i];
+
+            const cardCenter = projects.length > 1 ? i / (projects.length - 1) : 0;
+            const delta = progress - cardCenter;
+
+            // Title lags
+            if (title) {
+              title.style.transform = `translateY(-45%) translate3d(${delta * -80}px, 0, 0)`;
+            }
+
+            // Photo pushes ahead
+            if (photo) {
+              const s = 1 - Math.abs(delta) * 0.015;
+              photo.style.transform = `translateY(-50%) translate3d(${delta * 160}px, 0, 0) scale(${s})`;
+            }
+
+            // Meta follows photo
+            if (meta) {
+              const opacity = Math.max(0.15, 1 - Math.abs(delta) * 1.2);
+              meta.style.transform = `translateY(-50%) translate3d(${delta * 120}px, 0, 0)`;
+              meta.style.opacity = String(opacity);
+            }
           }
-        }
-      },
+        },
+      });
+
+      return () => {
+        st.kill();
+        // Clear all GSAP applied inline styles to prevent bugs if resizing down to mobile
+        gsap.set([track, progressBar, ...cardData.map(c => [c.title, c.photo, c.meta]).flat()], { clearProps: "all" });
+      };
     });
 
-    // Recalculate on resize
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener("resize", handleResize, { passive: true });
-
     return () => {
-      window.removeEventListener("resize", handleResize);
-      st.kill();
+      mm.revert();
     };
   }, []);
 
   return (
-    <section id="work" ref={sectionRef} className="relative bg-white overflow-hidden">
-      <div className="h-screen flex flex-col">
+    <section id="work" ref={sectionRef} className="relative bg-white lg:overflow-hidden">
+      <div className="flex flex-col lg:h-screen">
+        
         {/* Scrolling content */}
-        <div className="flex-1 overflow-hidden relative">
-          <div ref={trackRef} className="flex h-full" style={{ willChange: 'transform' }}>
+        <div className="w-full relative lg:flex-1 lg:overflow-hidden">
+          <div ref={trackRef} className="flex flex-col lg:flex-row h-auto lg:h-full w-full">
 
             {/* ── Project Cards ── */}
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="case-card w-[100vw] h-full flex-shrink-0 relative overflow-hidden"
+                className="case-card w-full lg:w-[100vw] h-auto lg:h-full lg:flex-shrink-0 relative lg:overflow-hidden flex flex-col lg:block pt-24 pb-20 lg:py-0 px-6 sm:px-12 lg:px-0 border-b border-grit-200 lg:border-none"
               >
-                {/* PROJECT label — above the title */}
-                <div
-                  className="absolute z-20"
-                  style={{ left: '14%', top: '18%' }}
-                >
-                  <span className="text-[0.55rem] font-header font-bold tracking-[0.4em] uppercase text-grit-400">
-                    PROJECT {project.num}
-                  </span>
+                
+                {/* ── MOBILE & TABLET LAYOUT (< lg) ── */}
+                <div className="lg:hidden flex flex-col md:flex-row md:items-start gap-8 md:gap-16 w-full max-w-4xl mx-auto">
+                  
+                  {/* LEFT SIDE (Tablet) / TOP (Mobile) */}
+                  <div className="flex-1 flex flex-col w-full">
+                    {/* Label */}
+                    <span className="text-[0.6rem] font-header font-bold tracking-[0.4em] uppercase text-grit-400 mb-6 block">
+                      PROJECT {project.num}
+                    </span>
+                    
+                    {/* Title */}
+                    <h3 className="text-[3.5rem] sm:text-7xl font-poster font-bold tracking-[-0.03em] leading-[0.85] text-grit-900 whitespace-pre-line mb-8 uppercase">
+                      {project.title}
+                    </h3>
+                    
+                    {/* Image */}
+                    <div className="w-full aspect-[4/5] sm:aspect-square md:aspect-[4/5] overflow-hidden mb-6 md:mb-0">
+                      <img 
+                        src={project.image} 
+                        alt={project.title.replace('\n', ' ')} 
+                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90" 
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  {/* RIGHT SIDE (Tablet) / BOTTOM (Mobile) */}
+                  <div className="flex-1 flex flex-col justify-center w-full md:pt-32">
+                    {/* Tags (Inline Stack) */}
+                    <div className="flex flex-wrap items-center gap-y-2 mb-6">
+                      {project.tags.map((tag, index) => (
+                        <span key={tag} className="flex items-center text-[0.65rem] sm:text-xs font-header font-bold text-grit-900 uppercase tracking-[0.15em]">
+                          {tag}
+                          {index < project.tags.length - 1 && <span className="mx-2 text-grit-400">•</span>}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="text-sm sm:text-base font-body text-grit-900/80 leading-[1.7] mb-8 max-w-sm">
+                      {project.description}
+                    </p>
+                    
+                    {/* CTA */}
+                    <a href="#" className="inline-flex justify-center items-center gap-2 text-[0.6rem] sm:text-xs font-header font-bold tracking-[0.25em] uppercase bg-grit-900 text-white w-full sm:w-auto px-8 py-4 sm:py-5 hover:bg-black transition-colors group/btn">
+                      VIEW CASE STUDY
+                      <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+
                 </div>
 
-                {/*
-                  ── Title — BLACK text, positioned left, overlapping into the image ──
-                  Uses mix-blend-difference so the text inverts to white
-                  where it overlaps the dark photograph.
-                */}
-                <div
-                  className="card-title absolute z-20 pointer-events-none"
-                  style={{
-                    left: '14%',
-                    top: '50%',
-                    transform: 'translateY(-45%)',
-                    willChange: 'transform',
-                  }}
-                >
-                  <h3
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-poster font-bold tracking-[-0.03em] leading-[0.88] text-grit-900 whitespace-pre-line"
-                    style={{ mixBlendMode: 'difference' }}
-                  >
-                    {project.title}
-                  </h3>
-                </div>
+                {/* ── DESKTOP LAYOUT (>= lg) ── */}
+                <div className="desktop-card hidden lg:block w-full h-full relative">
+                  {/* PROJECT label */}
+                  <div className="absolute z-20" style={{ left: '14%', top: '18%' }}>
+                    <span className="text-[0.55rem] font-header font-bold tracking-[0.4em] uppercase text-grit-400">
+                      PROJECT {project.num}
+                    </span>
+                  </div>
 
-                {/*
-                  ── Photo — positioned center-right so title overlaps its left edge ──
-                */}
-                <div
-                  className="card-photo absolute z-10"
-                  style={{
-                    left: '32%',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '36vw',
-                    maxWidth: '480px',
-                    willChange: 'transform',
-                  }}
-                >
-                  <div className="aspect-[4/5] w-full overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.id}
-                      className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90"
-                      loading="eager"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                    />
+                  {/* Title */}
+                  <div className="card-title absolute z-20 pointer-events-none" style={{ left: '14%', top: '50%', transform: 'translateY(-45%)' }}>
+                    <h3 className="text-8xl xl:text-[6.5rem] font-poster font-bold tracking-[-0.03em] leading-[0.88] text-grit-900 whitespace-pre-line uppercase" style={{ mixBlendMode: 'difference' }}>
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  {/* Photo */}
+                  <div className="card-photo absolute z-10" style={{ left: '32%', top: '50%', transform: 'translateY(-50%)', width: '36vw', maxWidth: '480px' }}>
+                    <div className="aspect-[4/5] w-full overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title.replace('\n', ' ')}
+                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tags + Description */}
+                  <div className="card-meta absolute z-20" style={{ left: 'calc(32% + 36vw + 28px)', top: '50%', transform: 'translateY(-50%)', maxWidth: '220px' }}>
+                    <div className="w-1.5 h-1.5 rounded-full bg-grit-900/30 mb-5" />
+                    <div className="flex flex-col gap-2 mb-5">
+                      {project.tags.map((tag) => (
+                        <p key={tag} className="text-xs font-header font-bold text-grit-900 uppercase tracking-wide border-b border-grit-900 w-fit pb-0.5 cursor-default hover:text-grit-500 hover:border-grit-500 transition-colors">
+                          {tag}
+                        </p>
+                      ))}
+                    </div>
+                    <p className="text-xs font-body text-grit-900/55 leading-relaxed mb-5">
+                      {project.description}
+                    </p>
+                    <a href="#" className="inline-flex items-center gap-1.5 text-[0.55rem] font-header font-bold tracking-[0.25em] uppercase text-grit-900 border border-grit-900 px-4 py-2 hover:bg-grit-900 hover:text-white transition-all duration-300 group/btn">
+                      VIEW CASE STUDY
+                      <ArrowUpRight className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
                   </div>
                 </div>
 
-                {/* ── Tags + Description — immediately right of the photo ── */}
-                <div
-                  className="card-meta absolute z-20"
-                  style={{
-                    left: 'calc(32% + 36vw + 28px)',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    maxWidth: '220px',
-                    willChange: 'transform, opacity',
-                  }}
-                >
-                  {/* Small dot */}
-                  <div className="w-1.5 h-1.5 rounded-full bg-grit-900/30 mb-5 hidden md:block" />
-
-                  {/* Tags */}
-                  <div className="flex flex-col gap-2 mb-5">
-                    {project.tags.map((tag) => (
-                      <p
-                        key={tag}
-                        className="text-[0.65rem] md:text-xs font-header font-bold text-grit-900 uppercase tracking-wide border-b border-grit-900 w-fit pb-0.5 cursor-default hover:text-grit-500 hover:border-grit-500 transition-colors"
-                      >
-                        {tag}
-                      </p>
-                    ))}
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-[0.6rem] md:text-xs font-body text-grit-900/55 leading-relaxed mb-5">
-                    {project.description}
-                  </p>
-
-                  {/* CTA */}
-                  <a href="#" className="inline-flex items-center gap-1.5 text-[0.55rem] font-header font-bold tracking-[0.25em] uppercase text-grit-900 border border-grit-900 px-4 py-2 hover:bg-grit-900 hover:text-white transition-all duration-300 group/btn">
-                    VIEW CASE STUDY
-                    <ArrowUpRight className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  </a>
-                </div>
               </div>
             ))}
 
           </div>
         </div>
 
-        {/* ── Fixed Bottom Bar with Progress ── */}
-        <div className="relative bg-white z-10 flex-shrink-0">
-          {/* Progress bar track + fill */}
+        {/* ── Fixed Bottom Bar with Progress (Desktop only) ── */}
+        <div className="hidden lg:block relative bg-white z-10 flex-shrink-0">
           <div className="relative h-px w-full bg-grit-200">
             <div
               ref={progressRef}
               className="absolute top-0 left-0 h-full w-full bg-grit-900 origin-left"
-              style={{ transform: 'scaleX(0)', willChange: 'transform' }}
+              style={{ transform: 'scaleX(0)' }}
             />
           </div>
 
-          <div className="px-8 md:px-16 py-4 md:py-5 flex justify-between items-center">
-            <span ref={counterRef} className="text-sm md:text-base font-poster font-bold text-grit-900/80 tracking-wide">
+          <div className="px-16 py-5 flex justify-between items-center">
+            <span ref={counterRef} className="text-base font-poster font-bold text-grit-900/80 tracking-wide">
               [ 01 / {String(projects.length).padStart(2, "0")} ]
             </span>
 

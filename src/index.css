@@ -124,7 +124,7 @@ html.lenis, html.lenis body {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 25s linear infinite;
+  animation: marquee 20s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -133,7 +133,7 @@ html.lenis, html.lenis body {
 .marquee-track-reverse {
   display: flex;
   width: max-content;
-  animation: marquee-reverse 30s linear infinite;
+  animation: marquee-reverse 25s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
