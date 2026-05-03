@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Andrew Dominic M — Digital Product Architect
 
-# Run and deploy your AI Studio app
+A high-performance portfolio built with a Swiss-Brutalist aesthetic, focusing on extreme performance, architectural clarity, and premium interactions.
 
-This contains everything you need to run your app locally.
+## ⚡ Performance & Optimization
+Optimized to 1% standards for the smoothest user experience:
+- **Lenis Smooth Scroll**: Integrated with GSAP ScrollTrigger for buttery smooth motion.
+- **DOM Persistence**: Scroll counters and progress bars use direct DOM manipulation to bypass React's render cycle during high-frequency scroll events.
+- **GPU Acceleration**: Heavy parallax layers promoted to individual GPU compositing layers via `translate3d` and `will-change`.
+- **Advanced Chunking**: Vite build configuration split into logical vendor chunks (React, GSAP, Three.js, Motion) for superior caching and parallel loading.
+- **Zero CLS**: Strict layout discipline to prevent Content Layout Shift.
 
-View your app in AI Studio: https://ai.studio/apps/5e0e7414-a958-4a9d-b1db-ae6b8867aa6b
+## 🛠 Tech Stack
+- **Core**: React 19 + TypeScript
+- **Styling**: Tailwind CSS 4 (Swiss-Brutalist Design System)
+- **Animation**: GSAP (GreenSock) + Motion (formerly Framer Motion)
+- **Smooth Scroll**: Lenis
+- **3D/Shaders**: Three.js + R3F (Custom Dither Shader)
+- **Build**: Vite 6 (Optimized ESBuild Minification)
 
-## Run Locally
+## 🏗 Key Sections
+- **Hero**: Dynamic Dither shader with mouse interaction.
+- **Work**: Horizontal parallax engine with differential physics.
+- **About**: Scroll-reveal narrative text with high-contrast typography.
+- **Contact**: Terminal-style transmission center.
 
-**Prerequisites:**  Node.js
+## 🚀 Getting Started
+```bash
+# Install dependencies
+npm install
 
+# Run development server
+npm run dev
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+# Build for production
+npm run build
+```
+
+---
+*Built by Andrew Dominic M — 2026*
