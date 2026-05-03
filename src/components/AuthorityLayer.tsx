@@ -5,10 +5,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  "3+ LIVE CLIENT SITES",
-  "₹10K HACKATHON WINNER",
+  "3+ CLIENT PROJECTS SHIPPED",
+  "HACKATHON WINNER",
   "100K+ CONTENT REACH",
-  "INDIA & AUSTRALIA CLIENTS",
+  "WORKED WITH INTERNATIONAL CLIENTS",
 ];
 
 const manifestoLine = "BUILDING SYSTEMS THAT ACTUALLY WORK — NOT DEMO APPS — REAL BUSINESSES — REAL RESULTS — SHIP FAST — ";
