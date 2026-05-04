@@ -51,7 +51,7 @@ export default function CaseStudies() {
     const track = trackRef.current;
     const progressBar = progressRef.current;
     const counterEl = counterRef.current;
-    
+
     if (!section || !track) return;
 
     let mm = gsap.matchMedia();
@@ -146,7 +146,7 @@ export default function CaseStudies() {
   return (
     <section id="work" ref={sectionRef} className="relative bg-white lg:overflow-hidden">
       <div className="flex flex-col lg:h-screen">
-        
+
         {/* Scrolling content - Fixed height collapse by adding flex flex-col */}
         <div className="w-full relative lg:flex-1 lg:overflow-hidden flex flex-col">
           {/* trackRef takes flex-1 to fill the height securely */}
@@ -158,28 +158,28 @@ export default function CaseStudies() {
                 key={project.id}
                 className="case-card w-full lg:w-[100vw] h-auto lg:h-full lg:flex-shrink-0 relative lg:overflow-hidden flex flex-col lg:block pt-24 pb-20 lg:py-0 px-6 sm:px-12 lg:px-0 border-b border-grit-200 lg:border-none"
               >
-                
+
                 {/* ── MOBILE & TABLET LAYOUT (< lg) ── */}
                 <div className="lg:hidden flex flex-col md:flex-row md:items-start gap-8 md:gap-16 w-full max-w-4xl mx-auto">
-                  
+
                   {/* LEFT SIDE (Tablet) / TOP (Mobile) */}
                   <div className="flex-1 flex flex-col w-full">
                     {/* Label */}
                     <span className="text-[0.6rem] font-header font-bold tracking-[0.4em] uppercase text-grit-400 mb-6 block">
                       PROJECT {project.num}
                     </span>
-                    
+
                     {/* Title */}
                     <h3 className="text-[3.5rem] sm:text-7xl font-poster font-bold tracking-[-0.03em] leading-[0.85] text-grit-900 whitespace-pre-line mb-8 uppercase">
                       {project.title}
                     </h3>
-                    
+
                     {/* Image */}
                     <div className="w-full aspect-[4/5] sm:aspect-square md:aspect-[4/5] overflow-hidden mb-6 md:mb-0">
-                      <img 
-                        src={project.image} 
-                        alt={project.title.replace('\n', ' ')} 
-                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90" 
+                      <img
+                        src={project.image}
+                        alt={project.title.replace('\n', ' ')}
+                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90"
                         loading="lazy"
                       />
                     </div>
@@ -196,12 +196,12 @@ export default function CaseStudies() {
                         </span>
                       ))}
                     </div>
-                    
+
                     {/* Description */}
                     <p className="text-sm sm:text-base font-body text-grit-900/80 leading-[1.7] mb-8 max-w-sm">
                       {project.description}
                     </p>
-                    
+
                     {/* CTA */}
                     <a href="#" className="inline-flex justify-center items-center gap-2 text-[0.6rem] sm:text-xs font-header font-bold tracking-[0.25em] uppercase bg-grit-900 text-white w-full sm:w-auto px-8 py-4 sm:py-5 hover:bg-black transition-colors group/btn">
                       VIEW CASE STUDY

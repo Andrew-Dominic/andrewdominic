@@ -65,18 +65,18 @@ export default function FounderNarrative() {
       const steps = gsap.utils.toArray('.narrative-step') as HTMLElement[];
 
       if (pinWrapper && steps.length > 0) {
-        gsap.set(steps, { 
-          opacity: 0, 
-          y: 40, 
-          scale: 0.95, 
-          filter: "blur(10px)" 
+        gsap.set(steps, {
+          opacity: 0,
+          y: 40,
+          scale: 0.95,
+          filter: "blur(10px)"
         });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: pinWrapper,
             start: "top top",
-            end: `+=${steps.length * 120}%`, 
+            end: `+=${steps.length * 120}%`,
             pin: true,
             scrub: 1,
           }
@@ -133,12 +133,12 @@ export default function FounderNarrative() {
     mm.add("all", () => {
       const skillSection = container.querySelector('.skills-section');
       const skillItems = container.querySelectorAll(".skill-item");
-      
+
       if (skillSection && skillItems.length) {
         gsap.fromTo(skillItems,
           { opacity: 0, y: 15 },
           {
-            opacity: 1, 
+            opacity: 1,
             y: 0,
             stagger: 0.02,
             duration: 0.8,
@@ -165,53 +165,53 @@ export default function FounderNarrative() {
 
         {/* ── MOBILE: STICKY NARRATIVE PRESENTATION ── */}
         <div className="md:hidden narrative-pin h-[100svh] w-full relative overflow-hidden flex items-center justify-center">
-          
+
           {/* Step 1: Headline */}
           <div className="narrative-step absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <span className="text-[0.45rem] sm:text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/25 mb-6 sm:mb-8">
-                003 // NARRATIVE
-              </span>
-              <h2 className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-poster font-bold tracking-[-0.04em] leading-[0.85] uppercase text-white drop-shadow-2xl">
-                REAL<br />CONTEXT.
-              </h2>
+            <span className="text-[0.45rem] sm:text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/25 mb-6 sm:mb-8">
+              003 // NARRATIVE
+            </span>
+            <h2 className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-poster font-bold tracking-[-0.04em] leading-[0.85] uppercase text-white drop-shadow-2xl">
+              REAL<br />CONTEXT.
+            </h2>
           </div>
 
           {/* Step 2: Who I am */}
           <div className="narrative-step absolute inset-0 flex items-center justify-center px-6 sm:px-12 md:px-16 max-w-4xl mx-auto text-center md:text-left">
-              <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-light text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
-                I'm Andrew Dominic M — a 19-year-old CS and Business Systems student at RIT Chennai, and co-founder of Synflow Studio, a web and AI automation agency based in Chennai.
-              </p>
+            <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-light text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
+              I'm Andrew Dominic M — a 19-year-old CS and Business Systems student at RIT Chennai, and co-founder of Synflow Studio, a web and AI automation agency based in Chennai.
+            </p>
           </div>
 
           {/* Step 3: What I build */}
           <div className="narrative-step absolute inset-0 flex items-center justify-center px-6 sm:px-12 md:px-16 max-w-4xl mx-auto text-center md:text-left">
-              <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-light text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
-                I build systems for real businesses — not demo apps, not clones. I’ve shipped a production e-commerce platform for a 100K audience brand, a live ticketing system for a 3,000+ attendee college fest, and an autonomous drone dashboard for the ISRO challenge.
-              </p>
+            <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-light text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
+              I build systems for real businesses — not demo apps, not clones. I’ve shipped a production e-commerce platform for a 100K audience brand, a live ticketing system for a 3,000+ attendee college fest, and an autonomous drone dashboard for the ISRO challenge.
+            </p>
           </div>
 
           {/* Step 4: Pull Quote */}
           <div className="narrative-step absolute inset-0 flex flex-col items-center justify-center px-6 sm:px-12 md:px-16 max-w-5xl mx-auto text-center">
-              <span className="text-[0.45rem] sm:text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/20 block mb-6 sm:mb-8">
-                ORIGIN_STORY
+            <span className="text-[0.45rem] sm:text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/20 block mb-6 sm:mb-8">
+              ORIGIN_STORY
+            </span>
+            <p className="text-[1.7rem] sm:text-4xl md:text-5xl lg:text-6xl font-poster font-bold leading-[1.1] sm:leading-[1.1] tracking-[-0.02em] uppercase text-white">
+              "MY PARENTS RUN A SMALL PROVISION STORE. I SAW FIRSTHAND HOW MUCH BETTER BUSINESSES COULD OPERATE WITH THE RIGHT DIGITAL SYSTEMS."
+            </p>
+            <div className="mt-8 md:mt-12 flex items-center justify-center gap-3">
+              <div className="h-px w-6 md:w-10 bg-white/15" />
+              <span className="text-[0.45rem] md:text-[0.5rem] font-header font-bold tracking-[0.3em] text-white/15 uppercase">
+                THAT’S STILL WHAT DRIVES ME
               </span>
-              <p className="text-[1.7rem] sm:text-4xl md:text-5xl lg:text-6xl font-poster font-bold leading-[1.1] sm:leading-[1.1] tracking-[-0.02em] uppercase text-white">
-                "MY PARENTS RUN A SMALL PROVISION STORE. I SAW FIRSTHAND HOW MUCH BETTER BUSINESSES COULD OPERATE WITH THE RIGHT DIGITAL SYSTEMS."
-              </p>
-              <div className="mt-8 md:mt-12 flex items-center justify-center gap-3">
-                <div className="h-px w-6 md:w-10 bg-white/15" />
-                <span className="text-[0.45rem] md:text-[0.5rem] font-header font-bold tracking-[0.3em] text-white/15 uppercase">
-                  THAT’S STILL WHAT DRIVES ME
-                </span>
-                <div className="h-px w-6 md:w-10 bg-white/15" />
-              </div>
+              <div className="h-px w-6 md:w-10 bg-white/15" />
+            </div>
           </div>
 
           {/* Step 5: Closing */}
           <div className="narrative-step absolute inset-0 flex items-center justify-center px-6 sm:px-12 md:px-16 max-w-4xl mx-auto text-center md:text-left">
-              <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-semibold text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
-                When I'm not building, I'm documenting the journey on Instagram and LinkedIn — because I think more students should see what's actually possible when you just start building.
-              </p>
+            <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-semibold text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
+              When I'm not building, I'm documenting the journey on Instagram and LinkedIn — because I think more students should see what's actually possible when you just start building.
+            </p>
           </div>
         </div>
 
@@ -276,7 +276,7 @@ export default function FounderNarrative() {
         {/* ── SKILLS SECTION (Normal Scroll, Both Devices) ── */}
         <div className="skills-section px-6 md:px-16 py-20 md:py-32 relative z-10 bg-grit-900 border-t border-white/5">
           <div className="max-w-5xl mx-auto text-center">
-            
+
             <div className="mb-12 md:mb-16">
               <span className="text-[0.45rem] sm:text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/50 block mb-6">
                 SYSTEMS I WORK WITH
@@ -329,7 +329,7 @@ export default function FounderNarrative() {
 
           </div>
         </div>
-        
+
       </div>
     </section>
   );

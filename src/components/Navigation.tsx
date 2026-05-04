@@ -11,7 +11,7 @@ export default function Navigation() {
   // We only hide navbar if the menu is NOT open
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (menuOpen) return;
-    
+
     if (latest > lastY && latest > 200) {
       setHidden(true);
     } else if (latest < lastY && latest > 200) {
@@ -27,10 +27,10 @@ export default function Navigation() {
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
   ];
-  
+
   return (
     <>
-      <motion.nav 
+      <motion.nav
         variants={{
           visible: { y: 0 },
           hidden: { y: -120 },
@@ -45,12 +45,12 @@ export default function Navigation() {
           </div>
           <div className="hidden md:block h-px w-12 bg-white/30" />
         </div>
-        
+
         {/* Desktop Links */}
         <div className="hidden md:flex gap-8">
           {links.map((link) => (
-            <a 
-              key={link.label} 
+            <a
+              key={link.label}
               href={link.href}
               className="text-xs font-header font-bold tracking-[0.2em] uppercase text-white hover:text-white/60 transition-colors"
             >
@@ -60,7 +60,7 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
           className="md:hidden text-white hover:text-white/70 transition-colors"
           onClick={() => setMenuOpen(true)}
           aria-label="Open Menu"
@@ -109,7 +109,7 @@ export default function Navigation() {
             </div>
 
             {/* Bottom Meta */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.5 }}

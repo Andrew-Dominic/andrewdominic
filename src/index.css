@@ -2,7 +2,8 @@
 @import "tailwindcss";
 
 /* ── Lenis smooth scroll ── */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -29,7 +30,7 @@ html.lenis, html.lenis body {
   --font-old-poster: "Kanit", sans-serif;
   --font-heading: "Instrument Serif", serif;
   --font-body: "Barlow", sans-serif;
-  
+
   --color-grit-900: #0a0a0a;
   --color-grit-800: #171717;
   --color-grit-700: #262626;
@@ -56,12 +57,14 @@ html.lenis, html.lenis body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
+
   body::-webkit-scrollbar {
     display: none;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     cursor: none !important;
   }
 
@@ -112,13 +115,23 @@ html.lenis, html.lenis body {
 /* ── Marquee Animation ── */
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-reverse {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .marquee-track {
@@ -186,11 +199,12 @@ html.lenis, html.lenis body {
 
 /* ── Reduced motion accessibility ── */
 @media (prefers-reduced-motion: reduce) {
+
   .marquee-track,
   .marquee-track-reverse {
     animation: none !important;
   }
-  
+
   * {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;

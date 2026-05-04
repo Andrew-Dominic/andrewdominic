@@ -26,7 +26,7 @@ export default function Hero() {
 
       {/* Decorative Images — Desktop only (lg+) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 hidden lg:block">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ delay: 0.5, duration: 1 }}
@@ -34,7 +34,7 @@ export default function Hero() {
         >
           <img src="https://i.pinimg.com/736x/85/24/f2/8524f26e3073e7b465b94f27ef4fe2fb.jpg" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.7 }}
           transition={{ delay: 0.7, duration: 1 }}
@@ -42,7 +42,7 @@ export default function Hero() {
         >
           <img src="https://i.pinimg.com/1200x/98/79/ae/9879aeda3f03cfbbdcb9640593042388.jpg" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.75 }}
           transition={{ delay: 0.9, duration: 1 }}
@@ -50,7 +50,7 @@ export default function Hero() {
         >
           <img src="https://i.pinimg.com/736x/e5/bf/1a/e5bf1a1320e99a31ac349ba282e49c38.jpg" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ delay: 1.1, duration: 1 }}
@@ -71,7 +71,7 @@ export default function Hero() {
           className="flex items-center gap-2 mb-6 sm:mb-5 md:mb-6"
         >
           <div className="h-px w-3 md:w-4 bg-grit-900" />
-          <p 
+          <p
             className="font-header text-[0.5rem] md:text-[0.6rem] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase text-grit-900"
             style={{ textShadow: '0 0 10px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.95), 0 0 30px rgba(255,255,255,0.7)' }}
           >
@@ -96,10 +96,10 @@ export default function Hero() {
               That{" "}
               <span className="relative inline-block pb-1">
                 Work.
-                <svg 
-                  className="absolute -inset-x-2 -inset-y-0.5 w-[calc(100%+16px)] h-[calc(100%+12px)] pointer-events-none" 
-                  viewBox="0 0 120 45" 
-                  fill="none" 
+                <svg
+                  className="absolute -inset-x-2 -inset-y-0.5 w-[calc(100%+16px)] h-[calc(100%+12px)] pointer-events-none"
+                  viewBox="0 0 120 45"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <motion.path
@@ -132,10 +132,10 @@ export default function Hero() {
               that{" "}
               <span className="relative inline-block whitespace-nowrap pb-2">
                 work.
-                <svg 
-                  className="absolute -inset-x-2 -inset-y-0.5 w-[calc(100%+16px)] h-[calc(100%+12px)] pointer-events-none" 
-                  viewBox="0 0 120 45" 
-                  fill="none" 
+                <svg
+                  className="absolute -inset-x-2 -inset-y-0.5 w-[calc(100%+16px)] h-[calc(100%+12px)] pointer-events-none"
+                  viewBox="0 0 120 45"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <motion.path
@@ -169,9 +169,9 @@ export default function Hero() {
           transition={{ delay: 1.5, duration: 1 }}
           className="hidden md:flex mb-8 relative z-0 w-full max-w-xl mx-auto overflow-hidden h-24 items-center justify-center"
         >
-          <img 
-            src="https://i.postimg.cc/K3z3fpGk/image-removebg-preview.png" 
-            alt="Systems Concept" 
+          <img
+            src="https://i.postimg.cc/K3z3fpGk/image-removebg-preview.png"
+            alt="Systems Concept"
             className="w-full max-w-md h-auto scale-[1.2] mix-blend-multiply opacity-70"
             referrerPolicy="no-referrer"
           />
@@ -184,7 +184,7 @@ export default function Hero() {
           transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-md mx-auto mt-0 md:mt-6 mb-8 md:mb-8"
         >
-          <p 
+          <p
             className="text-sm sm:text-base md:text-base text-grit-900 leading-[1.7] sm:leading-relaxed font-body font-medium px-2 sm:px-4"
             style={{ textShadow: '0 0 10px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.95), 0 0 30px rgba(255,255,255,0.7)' }}
           >
@@ -199,7 +199,7 @@ export default function Hero() {
           transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-sm sm:max-w-none sm:w-auto"
         >
-          <motion.button 
+          <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="w-full sm:w-auto px-10 sm:px-12 py-4 sm:py-4 bg-grit-900 text-white font-body font-black tracking-widest text-xs sm:text-xs uppercase flex items-center justify-center gap-3 transition-colors hover:bg-black"
@@ -210,7 +210,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
