@@ -132,8 +132,9 @@ export default function CaseStudies() {
 
       return () => {
         st.kill();
-        // Clear all GSAP applied inline styles to prevent bugs if resizing down to mobile
-        gsap.set([track, progressBar, ...cardData.map(c => [c.title, c.photo, c.meta]).flat()], { clearProps: "all" });
+        // Use transform,opacity instead of 'all' so we don't wipe React inline styles entirely if we use them,
+        // though Tailwind is safer. We will use Tailwind for base layout.
+        gsap.set([track, progressBar, ...cardData.map(c => [c.title, c.photo, c.meta]).flat()], { clearProps: "transform,opacity" });
       };
     });
 
@@ -146,9 +147,10 @@ export default function CaseStudies() {
     <section id="work" ref={sectionRef} className="relative bg-white lg:overflow-hidden">
       <div className="flex flex-col lg:h-screen">
         
-        {/* Scrolling content */}
-        <div className="w-full relative lg:flex-1 lg:overflow-hidden">
-          <div ref={trackRef} className="flex flex-col lg:flex-row h-auto lg:h-full w-full">
+        {/* Scrolling content - Fixed height collapse by adding flex flex-col */}
+        <div className="w-full relative lg:flex-1 lg:overflow-hidden flex flex-col">
+          {/* trackRef takes flex-1 to fill the height securely */}
+          <div ref={trackRef} className="flex flex-col lg:flex-row h-auto lg:flex-1 w-full">
 
             {/* ── Project Cards ── */}
             {projects.map((project) => (
@@ -266,16 +268,15 @@ export default function CaseStudies() {
         </div>
 
         {/* ── Fixed Bottom Bar with Progress (Desktop only) ── */}
-        <div className="hidden lg:block relative bg-white z-10 flex-shrink-0">
+        <div className="hidden lg:flex relative bg-white z-10 flex-shrink-0 flex-col">
           <div className="relative h-px w-full bg-grit-200">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 h-full w-full bg-grit-900 origin-left"
-              style={{ transform: 'scaleX(0)' }}
+              className="absolute top-0 left-0 h-full w-full bg-grit-900 origin-left scale-x-0 will-change-transform"
             />
           </div>
 
-          <div className="px-16 py-5 flex justify-between items-center">
+          <div className="px-16 py-5 flex justify-between items-center w-full">
             <span ref={counterRef} className="text-base font-poster font-bold text-grit-900/80 tracking-wide">
               [ 01 / {String(projects.length).padStart(2, "0")} ]
             </span>
