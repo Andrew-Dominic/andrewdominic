@@ -1,0 +1,386 @@
+/* ══════════════════════════════════════════════════════════
+   HERO SECTION — Editorial / Brutalist Typography-First
+   ══════════════════════════════════════════════════════════ */
+
+.hero-section {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #fafafa;
+  padding: 0 1.5rem;
+}
+
+/* ── Background Dither ── */
+.hero-dither {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.12;
+}
+
+@media (min-width: 640px) {
+  .hero-dither { opacity: 0.15; }
+}
+@media (min-width: 1024px) {
+  .hero-dither { opacity: 0.18; }
+}
+
+/* ── Subtle Grain ── */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ── Editorial Grid Lines ── */
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid-lines { display: block; }
+}
+
+.hero-grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(10, 10, 10, 0.04);
+}
+
+.hero-grid-line--left {
+  left: 8%;
+}
+
+.hero-grid-line--right {
+  right: 8%;
+}
+
+/* ── Top Meta ── */
+.hero-top-meta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5rem 3rem 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-top-meta { display: flex; }
+}
+
+.hero-meta-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.25);
+}
+
+/* ── Main Content ── */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* ── Role Tag ── */
+.hero-role-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .hero-role-tag { margin-bottom: 2rem; }
+}
+
+.hero-role-line {
+  height: 1px;
+  width: 1.25rem;
+  background: rgba(10, 10, 10, 0.35);
+}
+
+@media (min-width: 768px) {
+  .hero-role-line { width: 2rem; }
+}
+
+.hero-role-text {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+}
+
+@media (min-width: 768px) {
+  .hero-role-text { font-size: 0.6rem; letter-spacing: 0.4em; }
+}
+
+/* ── Headline ── */
+.hero-headline-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.hero-headline {
+  font-family: "Antonio", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.hero-headline--mobile {
+  display: block;
+  font-size: clamp(3.5rem, 16vw, 7rem);
+}
+
+@media (min-width: 768px) {
+  .hero-headline--mobile { display: none; }
+}
+
+.hero-headline--desktop {
+  display: none;
+  font-size: clamp(5rem, 9vw, 10rem);
+}
+
+@media (min-width: 768px) {
+  .hero-headline--desktop { display: block; }
+}
+
+@media (min-width: 1280px) {
+  .hero-headline--desktop { font-size: 9.5rem; }
+}
+
+@media (min-width: 1536px) {
+  .hero-headline--desktop { font-size: 11rem; }
+}
+
+.hero-headline-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-headline-accent {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-circle-svg {
+  position: absolute;
+  left: -8px;
+  top: -4px;
+  width: calc(100% + 16px);
+  height: calc(100% + 12px);
+  pointer-events: none;
+}
+
+/* ── Divider ── */
+.hero-divider {
+  width: 4rem;
+  height: 1px;
+  background: rgba(10, 10, 10, 0.2);
+  margin: 2rem 0;
+  transform-origin: center;
+}
+
+@media (min-width: 768px) {
+  .hero-divider {
+    width: 5rem;
+    margin: 2.5rem 0;
+  }
+}
+
+/* ── Subtext ── */
+.hero-subtext {
+  max-width: 26rem;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Barlow", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(10, 10, 10, 0.55);
+  letter-spacing: 0.01em;
+  margin-bottom: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .hero-subtext {
+    font-size: 0.95rem;
+    max-width: 28rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* ── CTA ── */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border: none;
+  transition: background 0.3s ease;
+  width: 100%;
+  max-width: 20rem;
+}
+
+@media (min-width: 640px) {
+  .hero-cta {
+    width: auto;
+    max-width: none;
+    padding: 1rem 3rem;
+  }
+}
+
+.hero-cta:hover {
+  background: #171717;
+}
+
+.hero-cta-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* ── Side Labels (editorial vertical text) ── */
+.hero-side-label {
+  position: absolute;
+  z-index: 5;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-side-label { display: block; }
+}
+
+.hero-side-label span {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.15);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.hero-side-label--left {
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero-side-label--right {
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ── Bottom Bar ── */
+.hero-bottom-bar {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .hero-bottom-bar {
+    bottom: 2.25rem;
+    left: 2rem;
+    right: 2rem;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-bottom-bar {
+    left: 3rem;
+    right: 3rem;
+  }
+}
+
+.hero-bottom-item {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .hero-bottom-item { display: flex; }
+}
+
+.hero-bottom-item span {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.2);
+}
+
+.hero-bottom-rule {
+  width: 1.5rem;
+  height: 1px;
+  background: rgba(10, 10, 10, 0.15);
+}
+
+.hero-bottom-scroll {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.2);
+}
+
+/* ── Scroll indicator pulse animation ── */
+@keyframes hero-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
+}
+
+.hero-bottom-scroll {
+  animation: hero-pulse 3s ease-in-out infinite;
+}
