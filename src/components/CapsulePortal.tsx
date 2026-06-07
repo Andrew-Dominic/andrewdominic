@@ -22,7 +22,6 @@ export default function CapsulePortal() {
   // ── Hero element refs (for fade/move) ──
   const ditherRef = useRef<HTMLDivElement>(null);
   const grainRef = useRef<HTMLDivElement>(null);
-  const topMetaRef = useRef<HTMLDivElement>(null);
   const roleTagRef = useRef<HTMLDivElement>(null);
   const headlineWrapperRef = useRef<HTMLDivElement>(null);
   const desktopLine1Ref = useRef<HTMLSpanElement>(null);
@@ -38,13 +37,12 @@ export default function CapsulePortal() {
   const sideLabelRightRef = useRef<HTMLDivElement>(null);
   const bottomNavRef = useRef<HTMLDivElement>(null);
 
-  // ── Cinematic refs ──
+  // ── Cinematic & Metrics refs ──
   const darkOverlayRef = useRef<HTMLDivElement>(null);
-  const cinematicRef = useRef<HTMLDivElement>(null);
-  const cinematicLine1Ref = useRef<HTMLParagraphElement>(null);
-  const cinematicLine2Ref = useRef<HTMLParagraphElement>(null);
-  const cinematicLine3Ref = useRef<HTMLParagraphElement>(null);
-  const cinematicLine4Ref = useRef<HTMLParagraphElement>(null);
+  const metricsWrapperRef = useRef<HTMLDivElement>(null);
+  const metric1Ref = useRef<HTMLDivElement>(null);
+  const metric2Ref = useRef<HTMLDivElement>(null);
+  const metric3Ref = useRef<HTMLDivElement>(null);
 
   // ── Measure capsule placeholder and return clip-path insets ──
   const measureCapsule = useCallback((isDesktop: boolean) => {
@@ -55,13 +53,15 @@ export default function CapsulePortal() {
     if (!placeholder || !viewport) return null;
 
     const pRect = placeholder.getBoundingClientRect();
-    const vRect = viewport.getBoundingClientRect();
 
+    // The capsule layer is forced to 100vw/100vh and centered to the screen.
+    // Therefore, its edges perfectly align with the browser window edges.
+    // We compute insets directly from the window boundaries.
     return {
-      top: pRect.top - vRect.top,
-      left: pRect.left - vRect.left,
-      bottom: vRect.height - (pRect.top - vRect.top) - pRect.height,
-      right: vRect.width - (pRect.left - vRect.left) - pRect.width,
+      top: pRect.top,
+      left: pRect.left,
+      bottom: window.innerHeight - pRect.bottom,
+      right: window.innerWidth - pRect.right,
     };
   }, []);
 
@@ -89,22 +89,34 @@ export default function CapsulePortal() {
         const insets = measureCapsule(true);
         if (!insets) return;
 
-        const initialClip = `inset(${insets.top}px ${insets.right}px ${insets.bottom}px ${insets.left}px round 9999px)`;
-
         // Set initial clip-path and reveal
         gsap.set(capsuleLayer, {
-          clipPath: initialClip,
+          clipPath: `inset(${insets.top}px ${insets.right}px ${insets.bottom}px ${insets.left}px round 9999px)`,
           visibility: "visible",
         });
+
+        // Proxy object for GSAP to tween clip-path values
+        const clip = { ...insets, radius: window.innerHeight / 2 };
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: "+=350%",
+            end: "+=300%",
             pin: viewport,
-            scrub: 0.8,
+            scrub: true, // Use true instead of numeric to perfectly sync with Lenis without lag
+            invalidateOnRefresh: true,
             anticipatePin: 1,
+            onRefresh: () => {
+              const fresh = measureCapsule(true);
+              if (fresh) {
+                clip.top = fresh.top;
+                clip.right = fresh.right;
+                clip.bottom = fresh.bottom;
+                clip.left = fresh.left;
+                clip.radius = window.innerHeight / 2;
+              }
+            },
           },
         });
 
@@ -113,7 +125,6 @@ export default function CapsulePortal() {
           [
             ditherRef.current,
             grainRef.current,
-            topMetaRef.current,
             roleTagRef.current,
             dividerRef.current,
             subtextRef.current,
@@ -125,14 +136,20 @@ export default function CapsulePortal() {
           0
         );
 
-        // ── Phase 2 (0.5–4.5): Capsule expands via native GSAP clipPath interpolation ──
-        tl.fromTo(
-          capsuleLayer,
-          { clipPath: initialClip },
+        // ── Phase 2 (0.5–4.5): Capsule expands via clip-path ──
+        tl.to(
+          clip,
           {
-            clipPath: "inset(0px 0px 0px 0px round 0px)",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            radius: 0,
             duration: 4,
             ease: "power3.inOut",
+            onUpdate: () => {
+              capsuleLayer.style.clipPath = `inset(${clip.top}px ${clip.right}px ${clip.bottom}px ${clip.left}px round ${clip.radius}px)`;
+            },
           },
           0.5
         );
@@ -154,57 +171,33 @@ export default function CapsulePortal() {
           0.7
         );
 
-        // ── Phase 3 (3–4.5): Background darkens ──
-        tl.to(
-          darkOverlayRef.current,
-          { opacity: 0.5, duration: 2, ease: "power2.inOut" },
-          3
+        // ── Phase 3 (1.5–3.5): Floating Metrics (appears during expansion) ──
+        tl.fromTo(
+          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1.5, stagger: 0.3, ease: "power3.out" },
+          1.5
         );
 
-        // ── Phase 4 (4.5–7): Cinematic text reveals ──
-        tl.fromTo(
-          cinematicLine1Ref.current,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" },
+        // ── Phase 4 (4.5–6): Fade to Black (ONLY after fullscreen is reached) ──
+        tl.to(
+          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
+          { opacity: 0, y: -20, duration: 1, stagger: 0.1, ease: "power2.in" },
           4.5
         );
-        tl.fromTo(
-          cinematicLine2Ref.current,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" },
-          5.0
-        );
-        tl.fromTo(
-          cinematicLine3Ref.current,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" },
-          5.5
-        );
-        tl.fromTo(
-          cinematicLine4Ref.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" },
-          6.2
-        );
 
-        // ── Phase 5 (8–10): Cinematic fades, prep for CaseStudies ──
-        tl.to(
-          [
-            cinematicLine1Ref.current,
-            cinematicLine2Ref.current,
-            cinematicLine3Ref.current,
-            cinematicLine4Ref.current,
-          ].filter(Boolean),
-          { opacity: 0, y: -30, duration: 1.5, stagger: 0.1, ease: "power2.in" },
-          8.5
-        );
-
-        // Darken fully to match CaseStudies bg
+        // Darken fully to transition cleanly into CaseStudies
         tl.to(
           darkOverlayRef.current,
-          { opacity: 0.85, duration: 1.5, ease: "power2.in" },
-          9
+          { opacity: 1, duration: 1.5, ease: "power2.inOut" },
+          4.5
         );
+
+        // Pad the end of the timeline massively so the user has to scroll significantly
+        // more while the screen is fully black. This forces the expansion tween (which ends
+        // at 4.5s) to be a smaller percentage of the total scroll distance, guaranteeing
+        // it finishes LONG before the ScrollTrigger unpins.
+        tl.to(darkOverlayRef.current, { opacity: 1, duration: 4 });
 
         return () => tl.kill();
       });
@@ -221,7 +214,7 @@ export default function CapsulePortal() {
           visibility: "visible",
         });
 
-        const clip = { ...insets, radius: 9999 };
+        const clip = { ...insets, radius: window.innerHeight / 2 };
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -229,14 +222,14 @@ export default function CapsulePortal() {
             start: "top top",
             end: "+=250%",
             pin: viewport,
-            scrub: 0.5,
+            scrub: true,
             invalidateOnRefresh: true,
             anticipatePin: 1,
             onRefresh: () => {
               const fresh = measureCapsule(false);
               if (fresh) {
                 Object.assign(clip, fresh);
-                clip.radius = 9999;
+                clip.radius = window.innerHeight / 2;
               }
             },
           },
@@ -279,22 +272,26 @@ export default function CapsulePortal() {
         tl.to(mobileThatRef.current, { x: "-60vw", opacity: 0, duration: 2, ease: "power3.inOut" }, 0.5);
         tl.to(mobileWorkRef.current, { x: "60vw", opacity: 0, duration: 2, ease: "power3.inOut" }, 0.5);
 
-        // Darken
-        tl.to(darkOverlayRef.current, { opacity: 0.5, duration: 1.5 }, 2.5);
-
-        // Cinematic text
-        tl.fromTo(cinematicLine1Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, 3.5);
-        tl.fromTo(cinematicLine2Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, 3.8);
-        tl.fromTo(cinematicLine3Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, 4.1);
-        tl.fromTo(cinematicLine4Ref.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, 4.6);
-
-        // Fade out cinematic
-        tl.to(
-          [cinematicLine1Ref.current, cinematicLine2Ref.current, cinematicLine3Ref.current, cinematicLine4Ref.current].filter(Boolean),
-          { opacity: 0, y: -20, duration: 1, stagger: 0.05, ease: "power2.in" },
-          6.5
+        // Floating metrics
+        tl.fromTo(
+          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" },
+          1.2
         );
-        tl.to(darkOverlayRef.current, { opacity: 0.85, duration: 1 }, 7);
+
+        // Fade out metrics
+        tl.to(
+          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
+          { opacity: 0, y: -15, duration: 0.8, stagger: 0.1, ease: "power2.in" },
+          3.8
+        );
+
+        // Darken fully
+        tl.to(darkOverlayRef.current, { opacity: 1, duration: 1.2, ease: "power2.inOut" }, 3.8);
+
+        // Pad the end massively
+        tl.to(darkOverlayRef.current, { opacity: 1, duration: 3 });
 
         return () => tl.kill();
       });
@@ -337,18 +334,6 @@ export default function CapsulePortal() {
           <div className="hero-grid-line hero-grid-line--right" />
         </div>
 
-        {/* Top meta */}
-        <motion.div
-          ref={topMetaRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 1.2 }}
-          className="hero-top-meta"
-        >
-          <span className="hero-meta-label">Portfolio — 2025</span>
-          <span className="hero-meta-label">Andrew Dominic M.</span>
-        </motion.div>
-
         {/* Main Content */}
         <div className="hero-content" style={{ zIndex: 10 }}>
           {/* Role Tag */}
@@ -359,9 +344,11 @@ export default function CapsulePortal() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="hero-role-tag"
           >
+            <span className="hero-meta-label hero-meta-label--left">Portfolio — 2026</span>
             <div className="hero-role-line" />
             <p className="hero-role-text">Product-Focused Developer</p>
             <div className="hero-role-line" />
+            <span className="hero-meta-label hero-meta-label--right">Andrew Dominic M.</span>
           </motion.div>
 
           {/* Headline */}
@@ -521,25 +508,16 @@ export default function CapsulePortal() {
             alt=""
             aria-hidden="true"
           />
-        </div>
+          
+          {/* ── DARK OVERLAY ── */}
+          <div ref={darkOverlayRef} className="capsule-portal__dark-overlay" />
 
-        {/* ── DARK OVERLAY ── */}
-        <div ref={darkOverlayRef} className="capsule-portal__dark-overlay" />
-
-        {/* ── CINEMATIC TEXT LAYER ── */}
-        <div ref={cinematicRef} className="capsule-portal__cinematic">
-          <p ref={cinematicLine1Ref} className="cinematic-line cinematic-line--large">
-            I build products.
-          </p>
-          <p ref={cinematicLine2Ref} className="cinematic-line cinematic-line--large">
-            I ship them.
-          </p>
-          <p ref={cinematicLine3Ref} className="cinematic-line cinematic-line--large">
-            I market them.
-          </p>
-          <p ref={cinematicLine4Ref} className="cinematic-line cinematic-line--small">
-            Computer Science × Business × Execution
-          </p>
+          {/* ── LIGHTWEIGHT METRICS ── */}
+          <div ref={metricsWrapperRef} className="capsule-portal__metrics">
+            <div ref={metric1Ref} className="capsule-metric">5+ Projects Shipped</div>
+            <div ref={metric2Ref} className="capsule-metric">Active Products</div>
+            <div ref={metric3Ref} className="capsule-metric">International Clients</div>
+          </div>
         </div>
       </div>
     </section>

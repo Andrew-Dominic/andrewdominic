@@ -62,7 +62,7 @@ export default function CustomCursor() {
       {/* Dot cursor */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 z-[9998] pointer-events-none rounded-full"
+        className="fixed top-0 left-0 z-[9998] pointer-events-none rounded-full hidden md:block"
         style={{
           width: isHoveringImage ? "80px" : "14px",
           height: isHoveringImage ? "80px" : "14px",
@@ -74,7 +74,7 @@ export default function CustomCursor() {
       {/* "View Project" label */}
       <div
         ref={labelRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none flex items-center justify-center"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:flex items-center justify-center"
         style={{
           width: "80px",
           height: "80px",

@@ -29,17 +29,6 @@ export default function Hero() {
         <div className="hero-grid-line hero-grid-line--right" />
       </div>
 
-      {/* Top meta — editorial issue/date style */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 1.2 }}
-        className="hero-top-meta"
-      >
-        <span className="hero-meta-label">Portfolio — 2025</span>
-        <span className="hero-meta-label">Andrew Dominic M.</span>
-      </motion.div>
-
       {/* Main Content — centered, typography-driven */}
       <div className="hero-content">
 
@@ -50,9 +39,11 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="hero-role-tag"
         >
+          <span className="hero-meta-label hero-meta-label--left">Portfolio — 2026</span>
           <div className="hero-role-line" />
           <p className="hero-role-text">Product-Focused Developer</p>
           <div className="hero-role-line" />
+          <span className="hero-meta-label hero-meta-label--right">Andrew Dominic M.</span>
         </motion.div>
 
         {/* Headline — the undeniable focal point */}

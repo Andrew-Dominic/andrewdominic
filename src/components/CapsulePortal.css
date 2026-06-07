@@ -27,7 +27,11 @@
    The clip-path is set dynamically by JS. */
 .capsule-portal__capsule {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100svh;
   z-index: 15;
   overflow: hidden;
   /* will-change added/removed dynamically by GSAP */
@@ -50,42 +54,28 @@
   pointer-events: none;
 }
 
-/* ── Cinematic Text Layer ── */
-.capsule-portal__cinematic {
+/* ── Lightweight Metrics (Proof Points) ── */
+.capsule-portal__metrics {
   position: absolute;
   inset: 0;
-  z-index: 25;
+  z-index: 16;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
   pointer-events: none;
-  padding: 2rem;
 }
 
-.cinematic-line {
-  font-family: "Antonio", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  opacity: 0;
-  text-align: center;
-}
-
-.cinematic-line--large {
-  font-size: clamp(2rem, 6vw, 5rem);
-}
-
-.cinematic-line--small {
-  font-family: "Barlow", sans-serif;
-  font-weight: 400;
-  font-size: clamp(0.75rem, 1.2vw, 1rem);
+.capsule-metric {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 2rem;
+  color: #ffffff;
+  opacity: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 /* ── Capsule placeholder — transparent spacer in headline ── */
@@ -106,7 +96,7 @@
   .capsule-portal__capsule {
     clip-path: none !important;
   }
-  .cinematic-line {
+  .capsule-metric {
     opacity: 1 !important;
     transform: none !important;
   }

@@ -71,22 +71,6 @@
 }
 
 /* ── Top Meta ── */
-.hero-top-meta {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5rem 3rem 0;
-}
-
-@media (min-width: 1024px) {
-  .hero-top-meta { display: flex; }
-}
-
 .hero-meta-label {
   font-family: "Outfit", sans-serif;
   font-size: 0.55rem;
@@ -94,6 +78,23 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: rgba(10, 10, 10, 0.25);
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-meta-label {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+  .hero-meta-label--left {
+    left: calc(50% - 42vw);
+  }
+  .hero-meta-label--right {
+    right: calc(50% - 42vw);
+  }
 }
 
 /* ── Main Content ── */
@@ -114,6 +115,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.75rem;
+  position: relative;
 }
 
 @media (min-width: 768px) {

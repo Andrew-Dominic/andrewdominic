@@ -45,14 +45,35 @@ export default function CaseStudies() {
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
     const progressBar = progressRef.current;
     const counterEl = counterRef.current;
+    const content = contentWrapperRef.current;
 
     if (!section || !track) return;
+
+    // Cinematic Entrance Reveal: Smoothly fade in content as the section scrolls up
+    if (content) {
+      gsap.fromTo(
+        content,
+        { opacity: 0, y: 120 },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%", // Start fading when section enters the viewport
+            end: "top 15%",   // Fully visible before it hits the top and pins
+            scrub: true,
+          },
+        }
+      );
+    }
 
     let mm = gsap.matchMedia();
 
@@ -145,7 +166,7 @@ export default function CaseStudies() {
 
   return (
     <section id="work" ref={sectionRef} className="relative bg-grit-900 lg:overflow-hidden">
-      <div className="flex flex-col lg:h-screen">
+      <div ref={contentWrapperRef} className="flex flex-col lg:h-screen will-change-transform">
 
         {/* Scrolling content - Fixed height collapse by adding flex flex-col */}
         <div className="w-full relative lg:flex-1 lg:overflow-hidden flex flex-col">
@@ -179,7 +200,7 @@ export default function CaseStudies() {
                       <img
                         src={project.image}
                         alt={project.title.replace('\n', ' ')}
-                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90"
+                        className="w-full h-full object-cover contrast-[1.2] brightness-90"
                         loading="lazy"
                       />
                     </div>
@@ -233,7 +254,7 @@ export default function CaseStudies() {
                       <img
                         src={project.image}
                         alt={project.title.replace('\n', ' ')}
-                        className="w-full h-full object-cover grayscale contrast-[1.2] brightness-90"
+                        className="w-full h-full object-cover contrast-[1.2] brightness-90"
                         loading="lazy"
                         decoding="async"
                         referrerPolicy="no-referrer"
@@ -269,7 +290,7 @@ export default function CaseStudies() {
 
         {/* ── Fixed Bottom Bar with Progress (Desktop only) ── */}
         <div className="hidden lg:flex relative bg-grit-900 z-10 flex-shrink-0 flex-col">
-          <div className="relative h-px w-full bg-white/10">
+          <div className="relative h-[3px] w-full bg-white/10">
             <div
               ref={progressRef}
               className="absolute top-0 left-0 h-full w-full bg-white origin-left scale-x-0 will-change-transform"
