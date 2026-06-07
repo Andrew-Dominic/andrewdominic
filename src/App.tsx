@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
-import AuthorityLayer from "./components/AuthorityLayer";
 import CaseStudies from "./components/CaseStudies";
 import FounderNarrative from "./components/FounderNarrative";
 import ContactFooter from "./components/ContactFooter";
@@ -33,7 +32,6 @@ export default function App() {
             <SmoothScroll>
               <Navigation />
               <Hero />
-              <AuthorityLayer />
               <CaseStudies />
               <FounderNarrative />
               <ContactFooter />
