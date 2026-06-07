@@ -37,14 +37,9 @@ export default function Navigation() {
         }}
         animate={hidden && !menuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:py-8 flex justify-between items-center mix-blend-difference"
+        className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:py-8 flex justify-end items-center mix-blend-difference"
       >
-        <div className="flex items-center gap-2">
-          <div className="bg-white px-3 md:px-4 py-1">
-            <span className="text-xl md:text-2xl font-poster font-bold tracking-tighter text-grit-900">AD.M</span>
-          </div>
-          <div className="hidden md:block h-px w-12 bg-white/30" />
-        </div>
+
 
         {/* Desktop Links */}
         <div className="hidden md:flex gap-8">

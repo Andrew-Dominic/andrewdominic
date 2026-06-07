@@ -36,7 +36,7 @@ const projects = [
     title: "Synflow\nStudio",
     tags: ["DIGITAL SYSTEMS", "FULL-STACK", "AUTOMATION", "CLIENT WORK"],
     description: "Co-founded a digital studio focused on building websites and automation systems for small businesses — helping streamline operations, manage leads, and improve client workflows.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&h=1000&fit=crop&q=80",
+    image: new URL("../assets/synflow_tn.png", import.meta.url).href,
   }
 ];
 

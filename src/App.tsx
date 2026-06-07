@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import Navigation from "./components/Navigation";
-import Hero from "./components/Hero";
+import CapsulePortal from "./components/CapsulePortal";
 import CaseStudies from "./components/CaseStudies";
 import FounderNarrative from "./components/FounderNarrative";
 import ContactFooter from "./components/ContactFooter";
@@ -30,8 +30,7 @@ export default function App() {
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <SmoothScroll>
-              <Navigation />
-              <Hero />
+              <CapsulePortal />
               <CaseStudies />
               <FounderNarrative />
               <ContactFooter />

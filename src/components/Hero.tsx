@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
 import Dither from "./ui/Dither";
 import "./Hero.css";
+import tenorGif from "../assets/tenor.gif";
 
 export default function Hero() {
   return (
@@ -66,10 +66,17 @@ export default function Hero() {
           <h1 className="hero-headline hero-headline--mobile">
             <span className="hero-headline-line">Building</span>
             <span className="hero-headline-line">Systems</span>
-            <span className="hero-headline-line">
-              That{" "}
-              <span className="hero-headline-accent">
-                Work.
+            <span className="hero-headline-line hero-headline-line--split">
+              <span>That</span>
+              <motion.span 
+                className="hero-capsule"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <img src={tenorGif} className="w-full h-full object-cover rounded-[inherit]" alt="editorial element" />
+              </motion.span>
+              <span className="hero-headline-accent">Work
                 <svg
                   className="hero-circle-svg"
                   viewBox="0 0 120 45"
@@ -93,10 +100,17 @@ export default function Hero() {
           {/* Desktop headline */}
           <h1 className="hero-headline hero-headline--desktop">
             <span className="hero-headline-line">Building Systems</span>
-            <span className="hero-headline-line">
-              That{" "}
-              <span className="hero-headline-accent">
-                Work.
+            <span className="hero-headline-line hero-headline-line--split">
+              <span>That</span>
+              <motion.span 
+                className="hero-capsule"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <img src={tenorGif} className="w-full h-full object-cover rounded-[inherit]" alt="editorial element" />
+              </motion.span>
+              <span className="hero-headline-accent">Work
                 <svg
                   className="hero-circle-svg"
                   viewBox="0 0 120 45"
@@ -135,21 +149,6 @@ export default function Hero() {
         >
           Full-stack developer combining Computer Science and Business to build high-performance digital products.
         </motion.p>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            className="hero-cta"
-          >
-            View Case Studies <ArrowRight className="hero-cta-icon" />
-          </motion.button>
-        </motion.div>
       </div>
 
       {/* Side label — vertical text, editorial detail */}
@@ -170,21 +169,31 @@ export default function Hero() {
         <span>Est. 2023</span>
       </motion.div>
 
-      {/* Bottom bar — refined editorial */}
+      {/* Bottom Nav — full width editorial style */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1 }}
-        className="hero-bottom-bar"
+        className="hero-bottom-nav"
       >
-        <div className="hero-bottom-item hero-bottom-item--left">
-          <span>001 / Start</span>
-          <div className="hero-bottom-rule" />
-        </div>
-        <p className="hero-bottom-scroll">Scroll to explore</p>
-        <div className="hero-bottom-item hero-bottom-item--right">
-          <div className="hero-bottom-rule" />
-          <span>Phase_01</span>
+        <div className="hero-bottom-nav-line" />
+        <div className="hero-bottom-nav-content">
+          <div className="hero-bottom-nav-left">
+            <span className="hero-bottom-nav-arrow">→</span>
+            <span>V3.0</span>
+          </div>
+          <div className="hero-bottom-nav-center">
+            <a href="#">BEHANCE</a>
+            <span className="hero-bottom-nav-slash">/</span>
+            <a href="#">LINKEDIN</a>
+            <span className="hero-bottom-nav-slash">/</span>
+            <a href="#">GITHUB</a>
+          </div>
+          <div className="hero-bottom-nav-right">
+            <a href="#work">WORK</a>
+            <a href="#about">INFO</a>
+            <a href="#contact">CONTACT</a>
+          </div>
         </div>
       </motion.div>
     </section>
