@@ -130,7 +130,7 @@ export default function CaseStudies() {
 
           // Progress bar
           if (progressBar) {
-            progressBar.style.transform = `scaleX(${progress})`;
+            progressBar.style.width = `${(progress * 100).toFixed(2)}%`;
           }
 
           // Counter
@@ -314,7 +314,8 @@ export default function CaseStudies() {
           <div className="relative h-[3px] w-full bg-white/10">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 h-full w-full bg-white origin-left scale-x-0 will-change-transform"
+              className="absolute top-0 left-0 h-full bg-white transition-none"
+              style={{ width: "0%" }}
             />
           </div>
 

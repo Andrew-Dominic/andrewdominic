@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Scroll-reveal text: words fade from dim → full as you scroll ── */
+/* ── Cinematic Scroll-reveal text: top 1% Framer style blur reveal ── */
 function RevealText({ children, className = "" }: { children: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -16,17 +16,24 @@ function RevealText({ children, className = "" }: { children: string; className?
 
     mm.add("(min-width: 768px)", () => {
       const words = el.querySelectorAll(".rw");
-      gsap.set(words, { opacity: 0.1 });
+      
+      // Top 1% Framer style: deep blur and low opacity initially
+      gsap.set(words, { 
+        opacity: 0.1,
+        filter: "blur(12px)",
+        willChange: "opacity, filter"
+      });
 
       gsap.to(words, {
         opacity: 1,
-        stagger: 0.04,
-        ease: "none",
+        filter: "blur(0px)",
+        stagger: 0.05,
+        ease: "power2.out", // smooth easing for the scrub interpolation
         scrollTrigger: {
           trigger: el,
-          start: "top 75%",
-          end: "bottom 45%",
-          scrub: 1,
+          start: "top 85%",
+          end: "center 45%",
+          scrub: 1.5, // 1.5s lag for a buttery smooth cinematic feel
         }
       });
     });
@@ -218,11 +225,12 @@ export default function FounderNarrative() {
         {/* ── DESKTOP: OLD NARRATIVE SECTION ── */}
         <div className="hidden md:block">
           {/* Block 1: Headline */}
-          <div className="min-h-screen flex items-center px-8 md:px-16">
-            <div className="narrative-headline">
-              <div className="flex items-center gap-4 mb-8">
+          <div className="min-h-screen flex flex-col items-center justify-center px-8 md:px-16 text-center">
+            <div className="narrative-headline flex flex-col items-center">
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="h-px w-12 bg-white/15" />
                 <span className="text-[0.5rem] font-header font-bold tracking-[0.35em] uppercase text-white/25">003 // NARRATIVE</span>
-                <div className="h-px w-16 bg-white/15" />
+                <div className="h-px w-12 bg-white/15" />
               </div>
               <h2 className="text-6xl md:text-8xl lg:text-[10rem] font-poster font-bold tracking-[-0.04em] leading-[0.85] uppercase text-white drop-shadow-2xl">
                 REAL<br />CONTEXT.
