@@ -47,7 +47,7 @@ html.lenis body {
 
 @layer base {
   body {
-    @apply antialiased text-grit-900 bg-white font-sans;
+    @apply antialiased text-white bg-grit-900 font-sans;
     cursor: none;
     scrollbar-width: none;
     -ms-overflow-style: none;

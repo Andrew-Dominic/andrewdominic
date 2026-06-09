@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -46,6 +46,9 @@ export default function CaseStudies() {
   const progressRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const [debugInfo, setDebugInfo] = useState<any>({});
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -53,13 +56,14 @@ export default function CaseStudies() {
     const progressBar = progressRef.current;
     const counterEl = counterRef.current;
     const content = contentWrapperRef.current;
+    const inner = innerRef.current;
 
     if (!section || !track) return;
 
     // Cinematic Entrance Reveal: Smoothly fade in content as the section scrolls up
-    if (content) {
+    if (inner) {
       gsap.fromTo(
-        content,
+        inner,
         { opacity: 0, y: 120 },
         {
           opacity: 1,
@@ -67,8 +71,8 @@ export default function CaseStudies() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 85%", // Start fading when section enters the viewport
-            end: "top 15%",   // Fully visible before it hits the top and pins
+            start: "top 95%", // Start fading immediately when entering viewport
+            end: "top 20%",    // Fully visible right before it pins
             scrub: true,
           },
         }
@@ -79,7 +83,8 @@ export default function CaseStudies() {
 
     // Only apply horizontal scroll + parallax on desktop (>= 1024px)
     mm.add("(min-width: 1024px)", () => {
-      const totalScrollWidth = track.scrollWidth - window.innerWidth;
+      // Calculate explicitly based on project count to avoid hidden mobile DOM elements polluting the width
+      const totalScrollWidth = (projects.length - 1) * window.innerWidth;
 
       // Cache DOM queries for desktop cards
       const cards = track.querySelectorAll<HTMLElement>(".desktop-card");
@@ -93,7 +98,7 @@ export default function CaseStudies() {
       let lastIndex = -1;
 
       const st = ScrollTrigger.create({
-        trigger: section,
+        trigger: content,
         start: "top top",
         end: () => `+=${totalScrollWidth}`,
         pin: true,
@@ -101,7 +106,23 @@ export default function CaseStudies() {
         invalidateOnRefresh: true,
         anticipatePin: 1,
         fastScrollEnd: true,
+        onRefresh: (self) => {
+          setDebugInfo((prev: any) => ({
+            ...prev,
+            csPinStart: self.start,
+            csPinEnd: self.end,
+            csTotalScrollWidth: totalScrollWidth,
+            csTrackScrollWidth: track.scrollWidth,
+            csWindowWidth: window.innerWidth,
+            csSpacerHeight: (self.pin as any)?.parentElement?.offsetHeight || 0,
+          }));
+        },
         onUpdate: (self) => {
+          setDebugInfo((prev: any) => ({
+            ...prev,
+            csProgress: self.progress.toFixed(3),
+            csScroll: self.scroll(),
+          }));
           const progress = self.progress;
 
           // Horizontal scroll the track
@@ -165,11 +186,16 @@ export default function CaseStudies() {
   }, []);
 
   return (
+    <>
+      <div style={{ position: "fixed", top: 10, right: 10, background: "rgba(0,0,0,0.8)", color: "lime", zIndex: 99999, padding: "10px", fontSize: "12px", fontFamily: "monospace", pointerEvents: "none" }}>
+        <strong>CaseStudies Debug:</strong>
+        <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+      </div>
     <section id="work" ref={sectionRef} className="relative bg-grit-900 lg:overflow-hidden">
       <div ref={contentWrapperRef} className="flex flex-col lg:h-screen will-change-transform">
-
-        {/* Scrolling content - Fixed height collapse by adding flex flex-col */}
-        <div className="w-full relative lg:flex-1 lg:overflow-hidden flex flex-col">
+        <div ref={innerRef} className="flex flex-col w-full h-full">
+          {/* Scrolling content - Fixed height collapse by adding flex flex-col */}
+          <div className="w-full relative lg:flex-1 lg:overflow-hidden flex flex-col">
           {/* trackRef takes flex-1 to fill the height securely */}
           <div ref={trackRef} className="flex flex-col lg:flex-row h-auto lg:flex-1 w-full">
 
@@ -307,8 +333,10 @@ export default function CaseStudies() {
               <ArrowUpRight className="w-3.5 h-3.5 group-hover/all:translate-x-0.5 group-hover/all:-translate-y-0.5 transition-transform" />
             </a>
           </div>
+          </div>
         </div>
       </div>
     </section>
+    </>
   );
 }

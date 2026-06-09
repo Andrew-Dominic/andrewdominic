@@ -1,0 +1,29 @@
+{
+  "triggers": [],
+  "spacers": [
+    {
+      "className": "pin-spacer",
+      "style": "order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: block; margin: 0px; inset: 0px; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 4050px; padding: 0px 0px 3150px;",
+      "height": 4050,
+      "paddingBottom": "3150px",
+      "rect": {},
+      "children": "capsule-portal"
+    },
+    {
+      "className": "pin-spacer",
+      "style": "order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: flex; margin: 0px; inset: auto; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 5220px; padding: 0px 0px 4320px;",
+      "height": 5220,
+      "paddingBottom": "4320px",
+      "rect": {},
+      "children": "flex flex-col lg:h-screen will-change-transform"
+    }
+  ],
+  "caseStudiesMetrics": {
+    "trackScrollWidth": 5760,
+    "trackClientWidth": 1440,
+    "contentWrapperWidth": 1440,
+    "viewportWidth": 1440
+  },
+  "scrollHeight": 14876,
+  "innerHeight": 900
+}

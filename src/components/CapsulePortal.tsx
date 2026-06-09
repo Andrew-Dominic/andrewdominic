@@ -102,11 +102,12 @@ export default function CapsulePortal() {
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: "+=300%",
-            pin: viewport,
-            scrub: true, // Use true instead of numeric to perfectly sync with Lenis without lag
+            end: "+=120%",
+            pin: true,
+            scrub: true,
             invalidateOnRefresh: true,
             anticipatePin: 1,
+            refreshPriority: 100,
             onRefresh: () => {
               const fresh = measureCapsule(true);
               if (fresh) {
@@ -120,84 +121,41 @@ export default function CapsulePortal() {
           },
         });
 
-        // ── Phase 1 (0–1): Peripherals fade out, dither dies ──
-        tl.to(
-          [
-            ditherRef.current,
-            grainRef.current,
-            roleTagRef.current,
-            dividerRef.current,
-            subtextRef.current,
-            sideLabelLeftRef.current,
-            sideLabelRightRef.current,
-            bottomNavRef.current,
-          ].filter(Boolean),
-          { opacity: 0, duration: 1.5, ease: "power2.in" },
-          0
+        // ── Phase 1: Peripherals fade out ──
+        tl.to([ditherRef.current, grainRef.current].filter(Boolean), { opacity: 0, duration: 0.2, ease: "power2.in" }, 0);
+        tl.fromTo(
+          [roleTagRef.current, dividerRef.current, subtextRef.current, sideLabelLeftRef.current, sideLabelRightRef.current, bottomNavRef.current].filter(Boolean),
+          { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in" }, 0
         );
 
-        // ── Phase 2 (0.5–4.5): Capsule expands via clip-path ──
+        // ── Phase 2: Capsule expands to fullscreen ──
         tl.to(
           clip,
           {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            radius: 0,
-            duration: 4,
-            ease: "power3.inOut",
+            top: 0, right: 0, bottom: 0, left: 0, radius: 0,
+            duration: 0.7, ease: "power2.inOut",
             onUpdate: () => {
               capsuleLayer.style.clipPath = `inset(${clip.top}px ${clip.right}px ${clip.bottom}px ${clip.left}px round ${clip.radius}px)`;
             },
           },
-          0.5
+          0.1
         );
 
-        // ── Phase 2b (0.5–3): Typography separates and fades ──
-        tl.to(
-          desktopLine1Ref.current,
-          { y: "-120%", opacity: 0, duration: 2.5, ease: "power3.inOut" },
-          0.5
-        );
-        tl.to(
-          desktopThatRef.current,
-          { x: "-80vw", opacity: 0, duration: 2.5, ease: "power3.inOut" },
-          0.7
-        );
-        tl.to(
-          desktopWorkRef.current,
-          { x: "80vw", opacity: 0, duration: 2.5, ease: "power3.inOut" },
-          0.7
-        );
+        // ── Phase 2b: Typography departs ──
+        tl.fromTo(desktopLine1Ref.current, { y: "0%", opacity: 1 }, { y: "-150%", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
+        tl.fromTo(desktopThatRef.current, { x: "0vw", opacity: 1 }, { x: "-50vw", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
+        tl.fromTo(desktopWorkRef.current, { x: "0vw", opacity: 1 }, { x: "50vw", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
 
-        // ── Phase 3 (1.5–3.5): Floating Metrics (appears during expansion) ──
-        tl.fromTo(
-          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 1.5, stagger: 0.3, ease: "power3.out" },
-          1.5
-        );
+        // ── Phase 3: Combined Cinematic Metrics ──
+        const metricRefs = [metric1Ref, metric2Ref, metric3Ref];
+        metricRefs.forEach((ref, i) => {
+          const offset = 0.4 + (i * 0.05); 
+          tl.fromTo(ref.current, { opacity: 0, y: 40, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: "power3.out" }, offset);
+          tl.to(ref.current, { opacity: 0, y: -30, scale: 1.02, duration: 0.2, ease: "power2.in" }, offset + 0.3);
+        });
 
-        // ── Phase 4 (4.5–6): Fade to Black (ONLY after fullscreen is reached) ──
-        tl.to(
-          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
-          { opacity: 0, y: -20, duration: 1, stagger: 0.1, ease: "power2.in" },
-          4.5
-        );
-
-        // Darken fully to transition cleanly into CaseStudies
-        tl.to(
-          darkOverlayRef.current,
-          { opacity: 1, duration: 1.5, ease: "power2.inOut" },
-          4.5
-        );
-
-        // Pad the end of the timeline massively so the user has to scroll significantly
-        // more while the screen is fully black. This forces the expansion tween (which ends
-        // at 4.5s) to be a smaller percentage of the total scroll distance, guaranteeing
-        // it finishes LONG before the ScrollTrigger unpins.
-        tl.to(darkOverlayRef.current, { opacity: 1, duration: 4 });
+        // ── Phase 4: Darken to black ──
+        tl.to(darkOverlayRef.current, { opacity: 1, duration: 0.2, ease: "power2.inOut" }, 0.8);
 
         return () => tl.kill();
       });
@@ -220,11 +178,12 @@ export default function CapsulePortal() {
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: "+=250%",
-            pin: viewport,
+            end: "+=120%",
+            pin: true,
             scrub: true,
             invalidateOnRefresh: true,
             anticipatePin: 1,
+            refreshPriority: 100,
             onRefresh: () => {
               const fresh = measureCapsule(false);
               if (fresh) {
@@ -236,17 +195,10 @@ export default function CapsulePortal() {
         });
 
         // Peripherals fade
-        tl.to(
-          [
-            ditherRef.current,
-            grainRef.current,
-            roleTagRef.current,
-            dividerRef.current,
-            subtextRef.current,
-            bottomNavRef.current,
-          ].filter(Boolean),
-          { opacity: 0, duration: 1.2, ease: "power2.in" },
-          0
+        tl.to([ditherRef.current, grainRef.current].filter(Boolean), { opacity: 0, duration: 0.2, ease: "power2.in" }, 0);
+        tl.fromTo(
+          [roleTagRef.current, dividerRef.current, subtextRef.current, bottomNavRef.current].filter(Boolean),
+          { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in" }, 0
         );
 
         // Capsule expands
@@ -254,44 +206,29 @@ export default function CapsulePortal() {
           clip,
           {
             top: 0, right: 0, bottom: 0, left: 0, radius: 0,
-            duration: 3.5,
-            ease: "power3.inOut",
+            duration: 0.7, ease: "power2.inOut",
             onUpdate: () => {
               capsuleLayer.style.clipPath = `inset(${clip.top}px ${clip.right}px ${clip.bottom}px ${clip.left}px round ${clip.radius}px)`;
             },
           },
-          0.3
+          0.1
         );
 
         // Mobile headline lines separate
-        tl.to(
-          [mobileLine1Ref.current, mobileLine2Ref.current].filter(Boolean),
-          { y: "-100%", opacity: 0, duration: 2, ease: "power3.inOut" },
-          0.3
-        );
-        tl.to(mobileThatRef.current, { x: "-60vw", opacity: 0, duration: 2, ease: "power3.inOut" }, 0.5);
-        tl.to(mobileWorkRef.current, { x: "60vw", opacity: 0, duration: 2, ease: "power3.inOut" }, 0.5);
+        tl.fromTo([mobileLine1Ref.current, mobileLine2Ref.current].filter(Boolean), { y: "0%", opacity: 1 }, { y: "-120%", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
+        tl.fromTo(mobileThatRef.current, { x: "0vw", opacity: 1 }, { x: "-40vw", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
+        tl.fromTo(mobileWorkRef.current, { x: "0vw", opacity: 1 }, { x: "40vw", opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0.1);
 
-        // Floating metrics
-        tl.fromTo(
-          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" },
-          1.2
-        );
-
-        // Fade out metrics
-        tl.to(
-          [metric1Ref.current, metric2Ref.current, metric3Ref.current].filter(Boolean),
-          { opacity: 0, y: -15, duration: 0.8, stagger: 0.1, ease: "power2.in" },
-          3.8
-        );
+        // Combined cinematic metrics
+        const metricRefs = [metric1Ref, metric2Ref, metric3Ref];
+        metricRefs.forEach((ref, i) => {
+          const offset = 0.4 + (i * 0.05);
+          tl.fromTo(ref.current, { opacity: 0, y: 30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: "power3.out" }, offset);
+          tl.to(ref.current, { opacity: 0, y: -20, scale: 1.02, duration: 0.2, ease: "power2.in" }, offset + 0.3);
+        });
 
         // Darken fully
-        tl.to(darkOverlayRef.current, { opacity: 1, duration: 1.2, ease: "power2.inOut" }, 3.8);
-
-        // Pad the end massively
-        tl.to(darkOverlayRef.current, { opacity: 1, duration: 3 });
+        tl.to(darkOverlayRef.current, { opacity: 1, duration: 0.2, ease: "power2.inOut" }, 0.8);
 
         return () => tl.kill();
       });
@@ -511,12 +448,26 @@ export default function CapsulePortal() {
           
           {/* ── DARK OVERLAY ── */}
           <div ref={darkOverlayRef} className="capsule-portal__dark-overlay" />
+        </div>
 
-          {/* ── LIGHTWEIGHT METRICS ── */}
-          <div ref={metricsWrapperRef} className="capsule-portal__metrics">
-            <div ref={metric1Ref} className="capsule-metric">5+ Projects Shipped</div>
-            <div ref={metric2Ref} className="capsule-metric">Active Products</div>
-            <div ref={metric3Ref} className="capsule-metric">International Clients</div>
+        {/* ── CINEMATIC METRICS ── */}
+        <div ref={metricsWrapperRef} className="capsule-portal__metrics">
+          <div className="capsule-metric-wrapper">
+            <div ref={metric1Ref} className="capsule-metric">
+              <div className="capsule-metric__line" />
+              <span className="capsule-metric__text">5+ PROJECTS SHIPPED</span>
+              <span className="capsule-metric__sub">FULL-STACK SYSTEMS</span>
+            </div>
+            <div ref={metric2Ref} className="capsule-metric">
+              <div className="capsule-metric__line" />
+              <span className="capsule-metric__text">ACTIVE PRODUCTS</span>
+              <span className="capsule-metric__sub">LIVE IN PRODUCTION</span>
+            </div>
+            <div ref={metric3Ref} className="capsule-metric">
+              <div className="capsule-metric__line" />
+              <span className="capsule-metric__text">INTERNATIONAL CLIENTS</span>
+              <span className="capsule-metric__sub">GLOBAL REACH</span>
+            </div>
           </div>
         </div>
       </div>
