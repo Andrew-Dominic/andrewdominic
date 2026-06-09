@@ -186,11 +186,6 @@ export default function CaseStudies() {
   }, []);
 
   return (
-    <>
-      <div style={{ position: "fixed", top: 10, right: 10, background: "rgba(0,0,0,0.8)", color: "lime", zIndex: 99999, padding: "10px", fontSize: "12px", fontFamily: "monospace", pointerEvents: "none" }}>
-        <strong>CaseStudies Debug:</strong>
-        <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
-      </div>
     <section id="work" ref={sectionRef} className="relative bg-grit-900 lg:overflow-hidden">
       <div ref={contentWrapperRef} className="flex flex-col lg:h-screen will-change-transform">
         <div ref={innerRef} className="flex flex-col w-full h-full">
@@ -337,6 +332,5 @@ export default function CaseStudies() {
         </div>
       </div>
     </section>
-    </>
   );
 }
