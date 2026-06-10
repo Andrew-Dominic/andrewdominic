@@ -1,6 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Kanit:wght@700;800;900&family=Antonio:wght@700&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('./assets/fonts/PlayfairDisplay-Italic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ── Lenis smooth scroll ── */
 html.lenis,
 html.lenis body {
@@ -30,6 +44,8 @@ html.lenis body {
   --font-old-poster: "Kanit", sans-serif;
   --font-heading: "Instrument Serif", serif;
   --font-body: "Barlow", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-helvetica: "Helvetica", sans-serif;
 
   --color-grit-900: #0a0a0a;
   --color-grit-800: #171717;

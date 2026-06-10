@@ -456,17 +456,17 @@ export default function CapsulePortal() {
             <div ref={metric1Ref} className="capsule-metric">
               <div className="capsule-metric__line" />
               <span className="capsule-metric__text">5+ PROJECTS SHIPPED</span>
-              <span className="capsule-metric__sub">FULL-STACK SYSTEMS</span>
+              <span className="capsule-metric__sub">Full-Stack Systems</span>
             </div>
             <div ref={metric2Ref} className="capsule-metric">
               <div className="capsule-metric__line" />
               <span className="capsule-metric__text">ACTIVE PRODUCTS</span>
-              <span className="capsule-metric__sub">LIVE IN PRODUCTION</span>
+              <span className="capsule-metric__sub">Live in Production</span>
             </div>
             <div ref={metric3Ref} className="capsule-metric">
               <div className="capsule-metric__line" />
               <span className="capsule-metric__text">INTERNATIONAL CLIENTS</span>
-              <span className="capsule-metric__sub">GLOBAL REACH</span>
+              <span className="capsule-metric__sub">Global Reach</span>
             </div>
           </div>
         </div>
