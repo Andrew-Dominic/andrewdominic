@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,7 +11,7 @@ const projects = [
     num: "01",
     title: "Shitha\nClothing",
     tags: ["E-COMMERCE", "SYSTEM SCALE", "PAYMENT FLOWS"],
-    description: "Built and deployed a production e-commerce system for a 100K audience brand — managing payments, performance, and server infrastructure on a dedicated VPS to ensure reliability under real traffic.",
+    description: <>Built and deployed a production e-commerce system for a <strong className="font-bold text-white">100K</strong> audience brand — managing payments, performance, and server infrastructure on a dedicated VPS to ensure reliability under real traffic.</>,
     image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=700&h=1000&fit=crop&q=80",
   },
   {
@@ -19,7 +19,7 @@ const projects = [
     num: "02",
     title: "Yatra\n2026",
     tags: ["EVENT SYSTEMS", "REAL-TIME VERIFICATION", "SCALABLE TICKETING"],
-    description: "Designed a real-time ticketing system with QR verification — eliminating duplicate entries for 3,000+ attendees.",
+    description: <>Designed a real-time ticketing system with QR verification — eliminating duplicate entries for <strong className="font-bold text-white">3,000+</strong> attendees.</>,
     image: new URL("../assets/yatra_tn.png", import.meta.url).href,
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     num: "03",
     title: "ISRO\nDrone",
     tags: ["AUTONOMOUS", "ONBOARD INTELLIGENCE", "REAL-TIME CONTROL"],
-    description: "Built a GPS-independent drone system — solving real-time navigation using onboard intelligence and live control dashboards.",
+    description: <>Built a GPS-independent drone system — solving real-time navigation using <strong className="font-bold text-white">onboard intelligence</strong> and live control dashboards.</>,
     image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=700&h=1000&fit=crop&q=80",
   },
   {
@@ -35,7 +35,7 @@ const projects = [
     num: "04",
     title: "Synflow\nStudio",
     tags: ["DIGITAL SYSTEMS", "FULL-STACK", "AUTOMATION", "CLIENT WORK"],
-    description: "Co-founded a digital studio focused on building websites and automation systems for small businesses — helping streamline operations, manage leads, and improve client workflows.",
+    description: <>Co-founded a digital studio focused on building websites and automation systems for <strong className="font-bold text-white">small businesses</strong> — helping streamline operations, manage leads, and improve client workflows.</>,
     image: new URL("../assets/synflow_tn.png", import.meta.url).href,
   }
 ];
@@ -47,8 +47,6 @@ export default function CaseStudies() {
   const counterRef = useRef<HTMLSpanElement>(null);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-
-  const [debugInfo, setDebugInfo] = useState<any>({});
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -102,35 +100,19 @@ export default function CaseStudies() {
         start: "top top",
         end: () => `+=${totalScrollWidth}`,
         pin: true,
-        scrub: 0.6,
+        scrub: true, // Matches exactly with Lenis to prevent 'laggy' or detached feel
         invalidateOnRefresh: true,
         anticipatePin: 1,
         fastScrollEnd: true,
-        onRefresh: (self) => {
-          setDebugInfo((prev: any) => ({
-            ...prev,
-            csPinStart: self.start,
-            csPinEnd: self.end,
-            csTotalScrollWidth: totalScrollWidth,
-            csTrackScrollWidth: track.scrollWidth,
-            csWindowWidth: window.innerWidth,
-            csSpacerHeight: (self.pin as any)?.parentElement?.offsetHeight || 0,
-          }));
-        },
         onUpdate: (self) => {
-          setDebugInfo((prev: any) => ({
-            ...prev,
-            csProgress: self.progress.toFixed(3),
-            csScroll: self.scroll(),
-          }));
           const progress = self.progress;
 
-          // Horizontal scroll the track
-          gsap.set(track, { x: -totalScrollWidth * progress });
+          // Horizontal scroll the track using hardware acceleration
+          track.style.transform = `translate3d(${-totalScrollWidth * progress}px, 0, 0)`;
 
-          // Progress bar
+          // Progress bar - scaleX is composite-only (no layout thrashing)
           if (progressBar) {
-            progressBar.style.width = `${(progress * 100).toFixed(2)}%`;
+            progressBar.style.transform = `scaleX(${progress})`;
           }
 
           // Counter
@@ -311,11 +293,11 @@ export default function CaseStudies() {
 
         {/* ── Fixed Bottom Bar with Progress (Desktop only) ── */}
         <div className="hidden lg:flex relative bg-grit-900 z-10 flex-shrink-0 flex-col">
-          <div className="relative h-[3px] w-full bg-white/10">
+          <div className="relative h-[3px] w-full bg-white/10 overflow-hidden">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 h-full bg-white transition-none"
-              style={{ width: "0%" }}
+              className="absolute top-0 left-0 h-full w-full bg-white transition-none origin-left"
+              style={{ transform: "scaleX(0)" }}
             />
           </div>
 

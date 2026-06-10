@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── Cinematic Scroll-reveal text: top 1% Framer style blur reveal ── */
-function RevealText({ children, className = "" }: { children: string; className?: string }) {
+function RevealText({ children, className = "", highlightWords = [] }: { children: string; className?: string; highlightWords?: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,9 +43,17 @@ function RevealText({ children, className = "" }: { children: string; className?
 
   return (
     <div ref={ref} className={className}>
-      {children.split(" ").map((word, i) => (
-        <span key={i} className="rw inline-block mr-[0.3em]">{word}</span>
-      ))}
+      {children.split(" ").map((word, i) => {
+        const isHighlighted = highlightWords.some(hw => word.includes(hw));
+        return (
+          <span 
+            key={i} 
+            className={`rw inline-block mr-[0.3em] ${isHighlighted ? "font-bold text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]" : ""}`}
+          >
+            {word}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -193,7 +201,7 @@ export default function FounderNarrative() {
           {/* Step 3: What I build */}
           <div className="narrative-step absolute inset-0 flex items-center justify-center px-6 sm:px-12 md:px-16 max-w-4xl mx-auto text-center md:text-left">
             <p className="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-body font-light text-white leading-[1.6] sm:leading-[1.5] tracking-tight">
-              I build systems for real businesses — not demo apps, not clones. I’ve shipped a production e-commerce platform for a 100K audience brand, a live ticketing system for a 3,000+ attendee college fest, and an autonomous drone dashboard for the ISRO challenge.
+              I build systems for real businesses — not demo apps, not clones. I’ve shipped a production e-commerce platform for a <strong className="font-bold text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">100K</strong> audience brand, a live ticketing system for a <strong className="font-bold text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">3,000+</strong> attendee college fest, and an autonomous drone dashboard for the ISRO challenge.
             </p>
           </div>
 
@@ -250,7 +258,10 @@ export default function FounderNarrative() {
           {/* Block 3: What I build */}
           <div className="min-h-[70vh] flex items-center px-8 md:px-16 py-24">
             <div className="max-w-3xl">
-              <RevealText className="text-xl md:text-2xl lg:text-3xl font-body font-light text-white leading-[1.6] tracking-tight">
+              <RevealText 
+                className="text-xl md:text-2xl lg:text-3xl font-body font-light text-white leading-[1.6] tracking-tight"
+                highlightWords={["100K", "3,000+"]}
+              >
                 I build systems for real businesses — not demo apps, not clones. I’ve shipped a production e-commerce platform for a 100K audience brand, a live ticketing system for a 3,000+ attendee college fest, and an autonomous drone dashboard for the ISRO challenge.
               </RevealText>
             </div>
