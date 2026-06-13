@@ -32,7 +32,7 @@ export default function CaseStudy() {
   if (!project) {
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center bg-grit-900 text-white">
-        <h1 className="text-4xl font-poster uppercase mb-4">Project Not Found</h1>
+        <h1 className="text-4xl font-helvetica uppercase mb-4">Project Not Found</h1>
         <button onClick={() => navigate("/")} className="text-sm font-header tracking-widest border-b border-white/30 pb-1">
           RETURN HOME
         </button>
@@ -62,7 +62,7 @@ export default function CaseStudy() {
           
           {/* Header Section */}
           <header className="mb-24 md:mb-40 relative">
-            <h1 className="reveal-el text-6xl md:text-9xl lg:text-[11rem] font-poster font-bold tracking-[-0.02em] leading-[0.85] uppercase mb-12">
+            <h1 className="reveal-el text-6xl md:text-9xl lg:text-[11rem] font-helvetica font-bold tracking-[-0.02em] leading-[0.85] uppercase mb-12">
               {project.title}
             </h1>
             
@@ -71,7 +71,7 @@ export default function CaseStudy() {
                 <h3 className="text-[0.65rem] font-header font-bold tracking-[0.25em] text-white/40 uppercase mb-4">
                   Overview
                 </h3>
-                <p className="text-sm md:text-base font-body text-white/80 leading-relaxed max-w-sm">
+                <p className="text-sm md:text-base font-helvetica text-white/80 leading-relaxed max-w-sm">
                   {project.description}
                 </p>
               </div>
@@ -136,23 +136,23 @@ export default function CaseStudy() {
               {/* 1. The Challenge */}
               <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-24 md:mb-40">
                 <div className="md:col-span-4 flex flex-col justify-start">
-                  <h2 className="text-4xl md:text-6xl font-poster font-bold tracking-tight uppercase leading-[0.9]">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
                     01.<br />The<br />Challenge
                   </h2>
                 </div>
                 <div className="md:col-span-8">
-                  <h3 className="text-2xl font-poster font-bold text-white mb-6 uppercase">The High-Traffic Paradox</h3>
-                  <p className="text-base md:text-lg font-body text-white/80 leading-relaxed font-light mb-8">
+                  <h3 className="text-2xl font-helvetica font-bold text-white mb-6 uppercase">The High-Traffic Paradox</h3>
+                  <p className="text-base md:text-lg font-helvetica text-white/80 leading-relaxed font-light mb-8">
                     When an influencer drops a product link via an Instagram Story, traffic does not scale linearly—it hits the backend infrastructure like a DDoS attack. Traditional "check-then-write" database operations immediately crumble under this load, causing database thread exhaustion, payment discrepancies, and severe inventory overselling.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-white/10 pt-8">
                     <div>
                       <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-3">Zero Overselling</h4>
-                      <p className="text-sm font-body text-white/60 leading-relaxed">If two users attempt to purchase the exact last item concurrently, the system must prioritize one and gracefully reject the other at the database level.</p>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">If two users attempt to purchase the exact last item concurrently, the system must prioritize one and gracefully reject the other at the database level.</p>
                     </div>
                     <div>
                       <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-3">Graceful Degradation</h4>
-                      <p className="text-sm font-body text-white/60 leading-relaxed">External dependency failures (e.g., payment gateways or Redis cache crashes) must be completely isolated so the entire application loop doesn't crash.</p>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">External dependency failures (e.g., payment gateways or Redis cache crashes) must be completely isolated so the entire application loop doesn't crash.</p>
                     </div>
                   </div>
                 </div>
@@ -188,7 +188,7 @@ export default function CaseStudy() {
 
               {/* 3. Engineering Deep-Dives */}
               <div className="reveal-el mb-24 md:mb-40">
-                <h2 className="text-4xl md:text-6xl font-poster font-bold tracking-tight uppercase leading-[0.9] mb-16">
+                <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9] mb-16">
                   02.<br />Engineering<br />Deep-Dives
                 </h2>
 
@@ -196,13 +196,13 @@ export default function CaseStudy() {
                   {/* A */}
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
                     <div className="md:col-span-4">
-                      <h3 className="text-xl font-poster font-bold text-white uppercase mb-2">A. Eradicating Race Conditions via Pure MongoDB Atomicity</h3>
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">A. Eradicating Race Conditions via Pure MongoDB Atomicity</h3>
                     </div>
                     <div className="md:col-span-8">
-                      <p className="text-sm font-body text-white/60 mb-6 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
                         <strong className="text-white">The Problem:</strong> Standard implementations read inventory status from the database, validate it via application code, and then execute a write. Under flash traffic, dozens of parallel Node.js threads read the same stock value simultaneously before any can update it, leading to massive data corruption and catastrophic overselling.
                       </p>
-                      <p className="text-sm font-body text-white/60 mb-8 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
                         <strong className="text-white">The Solution:</strong> Abandoned standard verification logic in favor of database-level, single-operation locks. Utilizing native MongoDB transaction sessions, the update and confirmation are coupled into an isolated, atomic $inc modifier execution query.
                       </p>
                       <div className="bg-grit-900 border border-white/10 p-6 rounded-sm mb-6 overflow-x-auto">
@@ -226,7 +226,7 @@ export default function CaseStudy() {
 {'}'}
 </pre>
                       </div>
-                      <p className="text-sm font-body text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
                         <strong className="text-white not-italic">The Result:</strong> It is mathematically impossible to deduct below zero. Multi-item checkouts are handled via an automated retry manager that injects random jitter to resolve transient write conflicts automatically.
                       </p>
                     </div>
@@ -235,16 +235,16 @@ export default function CaseStudy() {
                   {/* B */}
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
                     <div className="md:col-span-4">
-                      <h3 className="text-xl font-poster font-bold text-white uppercase mb-2">B. Dynamic Compound Caching & Graceful Degradation</h3>
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">B. Dynamic Compound Caching & Graceful Degradation</h3>
                     </div>
                     <div className="md:col-span-8">
-                      <p className="text-sm font-body text-white/60 mb-6 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
                         <strong className="text-white">The Problem:</strong> Complex product query mutations (filtering sizes, tracking price metrics, and checking category constraints) frequently lock database resources when requested thousands of times sequentially.
                       </p>
-                      <p className="text-sm font-body text-white/60 mb-6 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
                         <strong className="text-white">The Solution:</strong> Built a highly specialized caching wrapper using ioredis. Read-heavy product listings generate dynamic, serialized compound cache keys.
                       </p>
-                      <p className="text-sm font-body text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
                         <strong className="text-white not-italic">The Edge-Case Solution:</strong> If the Redis cluster goes completely offline, standard applications fail instantly. This wrapper implements an exponential backoff error-handler that flags isAvailable() = false. The app silently bypasses Redis and falls back to clean database querying without a single visible interruption to the user.
                       </p>
                     </div>
@@ -253,13 +253,13 @@ export default function CaseStudy() {
                   {/* C */}
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
                     <div className="md:col-span-4">
-                      <h3 className="text-xl font-poster font-bold text-white uppercase mb-2">C. Preventing Event-Loop Starvation</h3>
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">C. Preventing Event-Loop Starvation</h3>
                     </div>
                     <div className="md:col-span-8">
-                      <p className="text-sm font-body text-white/60 mb-6 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
                         <strong className="text-white">The Problem:</strong> Third-party webhooks require heavy computing tasks—like generating invoice PDFs and opening long-running SMTP mail pipes. Running these directly inside the HTTP response cycle quickly blocks the single-threaded Node.js event loop.
                       </p>
-                      <p className="text-sm font-body text-white/60 mb-8 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
                         <strong className="text-white">The Solution:</strong> Engineered a localized WebhookQueueManager. Incoming webhooks are immediately written to a RawWebhook collection as a lightweight log and closed with an instant HTTP 200 response.
                       </p>
                       <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-sm overflow-x-auto">
@@ -284,12 +284,12 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
               {/* 4. Architectural Safeguards */}
               <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
                 <div className="md:col-span-4">
-                  <h2 className="text-4xl md:text-6xl font-poster font-bold tracking-tight uppercase leading-[0.9]">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
                     03.<br />Safeguards
                   </h2>
                 </div>
                 <div className="md:col-span-8">
-                  <p className="text-base font-body text-white/80 leading-relaxed mb-12 font-light">
+                  <p className="text-base font-helvetica text-white/80 leading-relaxed mb-12 font-light">
                     To guarantee the site remains resilient under production stresses, two critical infrastructure patterns were hardcoded across all routes:
                   </p>
 
@@ -298,7 +298,7 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
                       <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-4 border-b border-white/20 pb-4">
                         The Circuit Breaker Pattern
                       </h4>
-                      <p className="text-sm font-body text-white/60 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">
                         To protect against cascading third-party API lag, all external transactions are executed within a protective <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">CircuitBreakerManager</code>. If the gateway encounters more than 5 consecutive network exceptions within a 45-second window, the breaker trips OPEN. This instantly stops incoming traffic from overloading the failing service and initiates a safe HALF_OPEN probing test after a cooldown period.
                       </p>
                     </div>
@@ -306,11 +306,270 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
                       <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-4 border-b border-white/20 pb-4">
                         Abandoned Cart Inventory Recovery
                       </h4>
-                      <p className="text-sm font-body text-white/60 leading-relaxed">
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">
                         Stock locked during checkout sessions must not stay frozen indefinitely. A low-overhead background cron job task wakes up every 2 minutes via <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">node-cron</code>. It sweeps the database for inventory holds older than 15 minutes, safely rolls the stock back into the active public inventory pool inside an isolated database session.
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </>
+          ) : project.id === "yatra" ? (
+            <>
+              {/* Performance Matrix */}
+              <div className="reveal-el grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 md:mb-40 border-y border-white/10 py-12">
+                <div className="text-center md:border-r border-white/10 md:pr-8">
+                  <h4 className="text-[0.65rem] font-header font-bold tracking-[0.2em] text-white/40 uppercase mb-4">Peak System Load</h4>
+                  <p className="text-3xl md:text-5xl font-poster font-bold text-white">8,000</p>
+                  <p className="text-sm font-header text-white/60 tracking-widest mt-2 uppercase">Live Attendees</p>
+                </div>
+                <div className="text-center md:border-r border-white/10 md:px-8">
+                  <h4 className="text-[0.65rem] font-header font-bold tracking-[0.2em] text-white/40 uppercase mb-4">Concurrency Lock</h4>
+                  <p className="text-3xl md:text-5xl font-poster font-bold text-white">ACID</p>
+                  <p className="text-sm font-header text-white/60 tracking-widest mt-2 uppercase">Row-Level</p>
+                </div>
+                <div className="text-center md:pl-8">
+                  <h4 className="text-[0.65rem] font-header font-bold tracking-[0.2em] text-white/40 uppercase mb-4">Ticket Scam Rate</h4>
+                  <p className="text-3xl md:text-5xl font-poster font-bold text-white">0.00%</p>
+                  <p className="text-sm font-header text-white/60 tracking-widest mt-2 uppercase">Absolute Zero</p>
+                </div>
+              </div>
+
+              {/* 1. The Legacy Vulnerability Matrix */}
+              <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-24 md:mb-40">
+                <div className="md:col-span-4 flex flex-col justify-start">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
+                    01.<br />The<br />Legacy<br />Threat
+                  </h2>
+                </div>
+                <div className="md:col-span-8">
+                  <h3 className="text-2xl font-helvetica font-bold text-white mb-6 uppercase">The Production Brief: Legacy Vulnerability Matrix</h3>
+                  <p className="text-base md:text-lg font-helvetica text-white/80 leading-relaxed font-light mb-8">
+                    In previous iterations of the college's cultural festival, gate control was heavily exploited. The institution relied on sending static, non-validated verification emails. Attendees bypassed purchases entirely through simple, malicious vectors.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-white/10 pt-8 mb-10">
+                    <div>
+                      <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-3">Screenshot Multiplexing</h4>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">A single valid admission email was screenshotted and shared among dozens of peers, causing severe overcrowding bottlenecks and total gate control failure.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-3">Notification Lag</h4>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">Ticket confirmations were compiled manually and dispatched the day before the event, leading to widespread user frustration and administrative chaos.</p>
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-helvetica font-bold text-white mb-6 uppercase border-t border-white/10 pt-8">Engineering Directives</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <span className="text-xs font-poster font-bold text-white/30 mt-0.5 flex-shrink-0">01</span>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed"><strong className="text-white">Cryptographic Anti-Tamper Payloads:</strong> Entry tokens must be signed securely at the hardware level, rendering guessable tokens or altered URLs invalid.</p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <span className="text-xs font-poster font-bold text-white/30 mt-0.5 flex-shrink-0">02</span>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed"><strong className="text-white">Absolute Zero-Race Condition Gate Scanning:</strong> If a single ticket is scanned at Gate A and a cloned screenshot is scanned simultaneously at Gate B, the database must execute an atomic check-and-lock to reject the second ticket instantly.</p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <span className="text-xs font-poster font-bold text-white/30 mt-0.5 flex-shrink-0">03</span>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed"><strong className="text-white">Preservation of Audit Trails:</strong> The physical state transitions across a 2-day festival timeline must remain permanent without relying on dangerous midnight cron-job database wipes.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Architecture Diagram */}
+              <div className="reveal-el mb-24 md:mb-40">
+                <h2 className="text-xs font-header font-bold tracking-[0.3em] text-white/40 uppercase mb-12 text-center">System Architecture & Cryptographic Verification Flow</h2>
+                <div className="bg-white/5 border border-white/10 p-8 md:p-16 rounded-sm overflow-x-auto">
+                  <pre className="font-mono text-xs md:text-sm text-white/70 leading-relaxed whitespace-pre w-max mx-auto">
+{`   [ PHYSICAL ACCESS GATE ]              [ SUPABASE EDGE LAYER ]             [ POSTGRES ENGINE ]
+   
+    Coordinators scan QR                  Validates structure &                Enforces isolation,
+   (Hardware-signed token)               checks active admin role             executes atomic locks
+              │                                     │                                    │
+              ▼                                     ▼                                    ▼
+      [ Scan Token ] ─────────────────────────► [ Verify Secret Key ]
+                                                    │
+                                             Valid HMAC-SHA256?
+                                            ┌───────┴───────┐
+                                            ▼ YES           ▼ NO
+                                    [ Invoke RPC ]   [ Terminate / Reject ]
+                                            │
+                                            ▼
+                                [ SELECT ... FOR UPDATE ] ──► Atomic row lock engaged`}
+                  </pre>
+                </div>
+              </div>
+
+              {/* 3. Engineering Deep-Dives */}
+              <div className="reveal-el mb-24 md:mb-40">
+                <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9] mb-16">
+                  02.<br />Core<br />Implementations
+                </h2>
+
+                <div className="space-y-24">
+                  {/* A. HMAC-SHA256 Cryptographic Ticket Minting */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
+                    <div className="md:col-span-4">
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">A. HMAC-SHA256 Cryptographic Ticket Minting</h3>
+                    </div>
+                    <div className="md:col-span-8">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
+                        <strong className="text-white">The Problem:</strong> Raw database identifiers (like standard UUIDs or flat string text) are trivially guessable and expose the ticketing system to payload tampering and forged QR codes.
+                      </p>
+                      <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
+                        <strong className="text-white">The Solution:</strong> The ticket generation microservice utilizes the <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">Web Crypto API</code> to securely process an isolated environment secret. It merges a collision-resistant verification code with a unique registration identifier, generating an unforgeable, cryptographically signed hardware-level string embedded inside the QR matrix asset.
+                      </p>
+                      <div className="bg-grit-900 border border-white/10 p-6 rounded-sm mb-6 overflow-x-auto">
+<pre className="font-mono text-xs text-[#a6accd] leading-loose whitespace-pre">
+<span className="text-[#676e95]">{'// supabase/functions/send-registration-email/index.ts'}</span>{'\n'}
+<span className="text-[#c792ea]">async function</span> <span className="text-[#82aaff]">signToken</span>(ticketId: <span className="text-[#ffcb6b]">string</span>, secret: <span className="text-[#ffcb6b]">string</span>): <span className="text-[#c792ea]">Promise</span>{'<'}<span className="text-[#ffcb6b]">string</span>{'>'} {'{'}
+  <span className="text-[#c792ea]">const</span> encoder = <span className="text-[#c792ea]">new</span> <span className="text-[#82aaff]">TextEncoder</span>();
+  <span className="text-[#c792ea]">const</span> key = <span className="text-[#c792ea]">await</span> crypto.subtle.<span className="text-[#82aaff]">importKey</span>(
+    <span className="text-[#c3e88d]">"raw"</span>, encoder.encode(secret),
+    {'{'} name: <span className="text-[#c3e88d]">"HMAC"</span>, hash: <span className="text-[#c3e88d]">"SHA-256"</span> {'}'}, <span className="text-[#89ddff]">false</span>, [<span className="text-[#c3e88d]">"sign"</span>]
+  );
+  <span className="text-[#c792ea]">const</span> signature = <span className="text-[#c792ea]">await</span> crypto.subtle.<span className="text-[#82aaff]">sign</span>(
+    <span className="text-[#c3e88d]">"HMAC"</span>, key, encoder.encode(ticketId)
+  );
+  <span className="text-[#c792ea]">const</span> hashHex = Array.from(<span className="text-[#c792ea]">new</span> <span className="text-[#82aaff]">Uint8Array</span>(signature))
+    .map((b) {'=> '}b.toString(<span className="text-[#f78c6c]">16</span>).padStart(<span className="text-[#f78c6c]">2</span>, <span className="text-[#c3e88d]">"0"</span>)).join(<span className="text-[#c3e88d]">""</span>);
+
+  <span className="text-[#c792ea]">return</span> <span className="text-[#c3e88d]">{'\u0060'}${'{'}ticketId{'}'}.${'{'}hashHex{'}'}{'\u0060'}</span>; <span className="text-[#676e95]">{'// Token payload → QR graphic'}</span>
+{'}'}
+</pre>
+                      </div>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                        <strong className="text-white not-italic">The Result:</strong> Even with full knowledge of the signing algorithm, producing a valid token is computationally infeasible without the server-side secret. Every QR code is a unique cryptographic proof of purchase.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* B. Race Condition Prevention */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
+                    <div className="md:col-span-4">
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">B. High-Concurrency Race Condition Prevention</h3>
+                    </div>
+                    <div className="md:col-span-8">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
+                        <strong className="text-white">The Problem:</strong> When multiple entrance gates handle thousands of frantic check-ins simultaneously, a standard <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">SELECT</code> then <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">UPDATE</code> loop introduces a catastrophic race condition window. Two parallel server instances could read a ticket as "unused" at the exact same millisecond.
+                      </p>
+                      <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
+                        <strong className="text-white">The Solution:</strong> The system bypasses application-level verification entirely, enforcing strict row-level locking. The Supabase edge function utilizes an implicit atomic SQL state conditional check.
+                      </p>
+                      <div className="bg-grit-900 border border-white/10 p-6 rounded-sm mb-6 overflow-x-auto">
+<pre className="font-mono text-xs text-[#a6accd] leading-loose whitespace-pre">
+<span className="text-[#676e95]">{'// supabase/functions/check_in/index.ts'}</span>{'\n'}
+<span className="text-[#c792ea]">const</span> {'{'} data: updated, error: updErr {'}'} = <span className="text-[#c792ea]">await</span> supabase
+  .from(<span className="text-[#c3e88d]">"registrations"</span>)
+  .update({'{'} checked_in_at: nowIso, checked_in_by: adminEmail {'}'})
+  .eq(<span className="text-[#c3e88d]">"id"</span>, registrationId)
+  .is(<span className="text-[#c3e88d]">"checked_in_at"</span>, <span className="text-[#89ddff]">null</span>) <span className="text-[#676e95]">{'// ATOMIC CONDITIONAL: Fails if modified elsewhere'}</span>
+  .select(<span className="text-[#c3e88d]">"id,checked_in_at"</span>).maybeSingle();
+</pre>
+                      </div>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic mb-6">
+                        <strong className="text-white not-italic">Database Isolation:</strong> At the deep database level, PostgreSQL implements a native transaction lock (<code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">SELECT ... FOR UPDATE</code>). This blocks separate physical threads from reading the row until the first transaction completes, while a 5-second replay guard ignores accidental duplicate clicks by gate staff.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* C. Stateless Multi-Day Timeline */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-12">
+                    <div className="md:col-span-4">
+                      <h3 className="text-xl font-helvetica font-bold text-white uppercase mb-2">C. Stateless Multi-Day Timeline Transitions</h3>
+                    </div>
+                    <div className="md:col-span-8">
+                      <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
+                        <strong className="text-white">The Problem:</strong> Traditional event codebases run a midnight cron job to wipe data or toggle boolean values between distinct multi-day phases. If a single background cron worker drops its connection or experiences failure midway through execution, the database state corrupts completely.
+                      </p>
+                      <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
+                        <strong className="text-white">The Solution:</strong> Designed an isolated column architecture (<code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">usage_day1</code> and <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">usage_day2</code>). The system maps the current date to an array index natively at the point of ingestion. When Day 2 begins, the gate scanners inherently look at the <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">usage_day2</code> column (which is naturally initialized as <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">NULL</code>).
+                      </p>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                        <strong className="text-white not-italic">The Result:</strong> This completely eliminates the need for volatile database state updates while preserving an uncompromised historical audit trail of Day 1 entries. Zero downtime, zero risk, zero data loss.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Large Typographic Pull Quote */}
+              <div className="reveal-el w-full py-24 md:py-40 border-y border-white/10 mb-24 md:mb-40 text-center">
+                 <h3 className="text-[4vw] font-helvetica font-bold tracking-tight leading-[1.1] uppercase text-white/20">
+                   "If a system can be breached by <span className="text-white">a screenshot</span>,<br />it was never <span className="text-white">a system.</span>"
+                 </h3>
+              </div>
+
+              {/* 4. Operational Resilience */}
+              <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-24 md:mb-40">
+                <div className="md:col-span-4">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
+                    03.<br />Operational<br />Resilience
+                  </h2>
+                </div>
+                <div className="md:col-span-8">
+                  <p className="text-base font-helvetica text-white/80 leading-relaxed mb-12 font-light">
+                    Access gate dynamics require immense human flexibility. To prevent fraudulent coordination behaviors, administrative overrides never delete historical telemetry data.
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                      <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-4 border-b border-white/20 pb-4">
+                        Emergency Override Triggers
+                      </h4>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">
+                        Executing an administrative override (<code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">admin_force_allow</code> / <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">admin_reset_entry</code>) flips the column reference back to <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">NULL</code> while a database trigger logs a detailed entry inside the <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">scan_logs</code> audit trail—injecting the administrator's email, timestamp, and a mandatory reason string.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white uppercase mb-4 border-b border-white/20 pb-4">
+                        On-Spot Real-Time Registration
+                      </h4>
+                      <p className="text-sm font-helvetica text-white/60 leading-relaxed">
+                        A specialized endpoint protected by an <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">ADMIN_PIN</code> handles physical cash purchases by generating a deterministic pseudo-UTR on the fly, firing an immediate <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">UPSERT</code> to lock the transaction to <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">"paid"</code>, and programmatically triggering the signed cryptographic ticket delivery via Deno TLS SMTP while the attendee is still standing at the counter.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5. High-Load Telemetry */}
+              <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
+                <div className="md:col-span-4">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
+                    04.<br />Telemetry<br />Offloading
+                  </h2>
+                </div>
+                <div className="md:col-span-8">
+                  <p className="text-sm font-helvetica text-white/60 mb-6 leading-relaxed">
+                    <strong className="text-white">The Bottleneck:</strong> Running massive, continuous <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">COUNT()</code> or heavy <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">JOIN</code> aggregation queries across an 8,000-row relational database would saturate read replicas, slowing down the vital <code className="font-mono text-[11px] bg-white/10 px-1 py-0.5 rounded text-white/90">validate_scan</code> API routes running at the access gates.
+                  </p>
+                  <p className="text-sm font-helvetica text-white/60 mb-8 leading-relaxed">
+                    <strong className="text-white">The Optimization:</strong> The administrator dashboard decouples computational aggregation completely. It queries a flattened, indexed dataset from the registrations table exactly once when mounting. All deep filtering, category separations, and state metrics calculations are computed locally on the client-side device RAM.
+                  </p>
+                  <div className="bg-grit-900 border border-white/10 p-6 rounded-sm mb-6 overflow-x-auto">
+<pre className="font-mono text-xs text-[#a6accd] leading-loose whitespace-pre">
+<span className="text-[#676e95]">{'// src/components/AdminDashboard.tsx'}</span>{'\n'}
+<span className="text-[#c792ea]">const</span> paidNotSentTickets = tickets.filter(
+  t {'=> '}t.payment_status === <span className="text-[#c3e88d]">'paid'</span> && !t.ticket_email_sent
+).length; <span className="text-[#676e95]">{'// Compute footprint offloaded entirely to browser thread'}</span>
+</pre>
+                  </div>
+                  <p className="text-sm font-helvetica text-white/60 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                    <strong className="text-white not-italic">The Result:</strong> This offloads the database computational load entirely, ensuring maximum transaction capacity and low response latencies remain fully dedicated to live gate control endpoints.
+                  </p>
+                </div>
+              </div>
+
+              {/* Stack Footer */}
+              <div className="reveal-el mt-24 md:mt-40 border-t border-white/10 pt-12">
+                <h4 className="text-[0.65rem] font-header font-bold tracking-[0.25em] text-white/40 uppercase mb-6">Technology Stack</h4>
+                <div className="flex flex-wrap gap-3">
+                  {["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Edge Functions (Deno TLS)", "Web Crypto API", "Python"].map((tech) => (
+                    <span key={tech} className="text-xs font-header font-bold tracking-[0.1em] text-white/70 uppercase border border-white/20 px-4 py-2 hover:bg-white/5 transition-colors">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </>
@@ -319,12 +578,12 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
               {/* Case Study Content Grid (Placeholder for other projects) */}
               <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-24 md:mb-40">
                 <div className="md:col-span-4 flex flex-col justify-between">
-                  <h2 className="text-4xl md:text-6xl font-poster font-bold tracking-tight uppercase leading-[0.9]">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
                     The<br />Challenge
                   </h2>
                 </div>
                 <div className="md:col-span-8">
-                  <p className="text-lg md:text-2xl font-body text-white/80 leading-relaxed font-light">
+                  <p className="text-lg md:text-2xl font-helvetica text-white/80 leading-relaxed font-light">
                     Developing high-performance digital architecture requires a delicate balance between aesthetics and engineering. The primary challenge was architecting a scalable foundation that could handle intense load without compromising the premium, fluid user experience. Every interaction needed to feel instantaneous, and the backend infrastructure had to be perfectly synchronized with the client-facing interface.
                   </p>
                 </div>
@@ -340,7 +599,7 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
               {/* Solution & Tech Stack */}
               <div className="reveal-el grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
                 <div className="md:col-span-4">
-                  <h2 className="text-4xl md:text-6xl font-poster font-bold tracking-tight uppercase leading-[0.9]">
+                  <h2 className="text-4xl md:text-6xl font-helvetica font-bold tracking-tight uppercase leading-[0.9]">
                     The<br />Solution
                   </h2>
                 </div>
@@ -349,7 +608,7 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
                     <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white/50 uppercase mb-6">
                       01. Technical Foundation
                     </h4>
-                    <p className="text-sm font-body text-white/80 leading-relaxed">
+                    <p className="text-sm font-helvetica text-white/80 leading-relaxed">
                       We engineered a custom backend system capable of real-time synchronization, minimizing latency across geographic nodes. The architecture prioritizes edge-caching and lazy-loading heavy assets.
                     </p>
                   </div>
@@ -357,7 +616,7 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
                     <h4 className="text-xs font-header font-bold tracking-[0.2em] text-white/50 uppercase mb-6">
                       02. Fluid Interface
                     </h4>
-                    <p className="text-sm font-body text-white/80 leading-relaxed">
+                    <p className="text-sm font-helvetica text-white/80 leading-relaxed">
                       To achieve the cinematic feel, we implemented custom WebGL shaders alongside advanced GSAP physics. Scroll events are decoupled from the main thread, ensuring a perfect 60fps experience.
                     </p>
                   </div>
@@ -374,7 +633,7 @@ Generates Invoice / Mail                             Diverts to Dead Letter Queu
             <span className="text-[0.65rem] font-header font-bold tracking-[0.3em] text-white/40 uppercase mb-6">
               Return to Portfolio
             </span>
-            <h2 className="text-4xl md:text-7xl font-poster font-bold uppercase tracking-tight">
+            <h2 className="text-4xl md:text-7xl font-helvetica font-bold uppercase tracking-tight">
               All Works
             </h2>
           </div>

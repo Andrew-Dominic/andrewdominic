@@ -13,6 +13,8 @@ export default function ContactFooter() {
   const whiteBgRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Prevent horizontal scrollbar when text slides in
@@ -22,8 +24,10 @@ export default function ContactFooter() {
     const whiteBg = whiteBgRef.current;
     const text = textRef.current;
     const leftCol = leftColRef.current;
+    const grid = gridRef.current;
+    const footer = footerRef.current;
 
-    if (!scrollTrack || !whiteBg || !text || !leftCol) return;
+    if (!scrollTrack || !whiteBg || !text || !leftCol || !grid || !footer) return;
 
     let mm = gsap.matchMedia();
 
@@ -67,8 +71,9 @@ export default function ContactFooter() {
       // CSS Sticky breaks inside smooth scroll wrappers (Lenis). GSAP pinning is bulletproof.
       ScrollTrigger.create({
         trigger: leftCol,
+        endTrigger: footer,
         start: "top 55%", // Locks exactly below the "CONTACT" text
-        end: "max", // Remains locked until the very end of the page
+        end: "top 90%", // Unpins to leave a much tighter, more natural gap
         pin: true,
         pinSpacing: false,
       });
@@ -104,7 +109,7 @@ export default function ContactFooter() {
 
         {/* ── SCROLLING CONTENT GRID ── */}
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-16 pt-[80vh] md:pt-[100vh] pb-[6vh] md:pb-[10vh] z-20 pointer-events-none">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pointer-events-auto">
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pointer-events-auto">
             
             {/* LEFT COLUMN: Links and email (Locked via GSAP) */}
             <div ref={leftColRef} className="md:col-span-5 flex flex-col mt-[10vh] md:mt-[30vh] self-start z-30">
@@ -122,9 +127,16 @@ export default function ContactFooter() {
             <div className="md:col-span-7 flex flex-col gap-24 lg:gap-32">
                {/* First block */}
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
-                  <p className="text-lg md:text-xl font-body text-grit-900 leading-snug">
-                     Looking for meaningful work.<br/><br/>
-                     <span className="italic font-serif">Eager to join</span> an innovative team<br/> and contribute to ambitious<br/> projects.
+                  <p className="text-2xl md:text-3xl lg:text-4xl font-helvetica text-grit-900 leading-[1.15] tracking-tight">
+                     Looking for an<br/>
+                     <span className="font-playfair italic pr-1">apprenticeship</span><br/>
+                     starting<br/>
+                     October.<br/>
+                     Eager to join an<br/>
+                     innovative team<br/>
+                     and contribute to<br/>
+                     ambitious<br/>
+                     projects.
                   </p>
                   <div className="w-full aspect-[4/5] relative overflow-hidden bg-grit-200">
                      <img src={contactAbstract1} alt="Abstract 3D Art" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out grayscale-[15%] contrast-110" />
@@ -140,8 +152,14 @@ export default function ContactFooter() {
                      <div className="absolute top-4 left-4 text-white/50 text-xs font-light">+</div>
                      <div className="absolute top-4 right-4 text-white/50 text-xs font-light">+</div>
                   </div>
-                  <p className="text-lg md:text-xl font-body text-grit-900 leading-snug sm:text-center order-1 sm:order-2 px-4">
-                     I'm available for<br/> <span className="italic font-serif">freelance missions worldwide</span>,<br/> on your ambitious projects and<br/> international collaborations.
+                  <p className="text-2xl md:text-3xl lg:text-4xl font-helvetica text-grit-900 leading-[1.15] tracking-tight order-1 sm:order-2 px-0 sm:px-4">
+                     I'm available for<br/>
+                     <span className="font-playfair italic pr-1">freelance missions</span><br/>
+                     <span className="font-playfair italic pr-1">worldwide</span>, on<br/>
+                     your <span className="font-playfair italic pr-1">ambitious</span><br/>
+                     <span className="font-playfair italic pr-1">projects</span> and<br/>
+                     international<br/>
+                     collaborations.
                   </p>
                </div>
             </div>
@@ -149,7 +167,7 @@ export default function ContactFooter() {
           </div>
 
           {/* ── EMBEDDED FOOTER ── */}
-          <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6 mt-32 md:mt-48 pt-8 border-t border-grit-900/10 pointer-events-auto">
+          <div ref={footerRef} className="w-full flex flex-col md:flex-row justify-between items-center gap-6 mt-16 md:mt-24 pt-8 border-t border-grit-900/10 pointer-events-auto">
             <span className="text-[0.55rem] font-header font-bold tracking-[0.3em] uppercase text-grit-900/40">
               © {currentYear} ANDREW DOMINIC M
             </span>

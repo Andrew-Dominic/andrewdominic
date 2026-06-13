@@ -19,8 +19,8 @@ export const projects = [
     id: "yatra",
     num: "02",
     title: "Yatra\n2026",
-    tags: ["EVENT SYSTEMS", "REAL-TIME VERIFICATION", "SCALABLE TICKETING"],
-    description: <>Designed a real-time ticketing system with QR verification — eliminating duplicate entries for <strong className="font-bold text-white">3,000+</strong> attendees.</>,
+    tags: ["ANTI-FRAUD TICKETING", "CRYPTOGRAPHIC ACCESS", "HIGH-CONCURRENCY"],
+    description: <>Engineered a decentralized anti-fraud ticketing &amp; real-time access infrastructure — processing <strong className="font-bold text-white">8,000</strong> concurrent attendees with zero race conditions.</>,
     image: new URL("../assets/yatra_tn.png", import.meta.url).href,
   },
   {
