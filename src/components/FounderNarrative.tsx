@@ -274,13 +274,13 @@ export default function FounderNarrative() {
           clipPath: "inset(0% 0% 0% 0%)",
           y: 0,
           scale: 1,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: "power3.out",
+          stagger: 0.15,
+          ease: "none",
           scrollTrigger: {
             trigger: stackContainer,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
+            start: "top 90%",
+            end: "center 50%",
+            scrub: 1.5,
           }
         });
       }

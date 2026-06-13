@@ -43,7 +43,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white overflow-hidden p-0 m-0">
+    <div className="relative w-full h-full flex items-center justify-center bg-white overflow-hidden p-0 m-0">
       <div className="relative w-80 h-80 md:w-[500px] md:h-[500px] aspect-square overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div

@@ -2,10 +2,11 @@ import { useRef, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+export const projects = [
   {
     id: "shitha",
     num: "01",
@@ -227,10 +228,10 @@ export default function CaseStudies() {
                     </p>
 
                     {/* CTA */}
-                    <a href="#" className="inline-flex justify-center items-center gap-2 text-[0.6rem] sm:text-xs font-header font-bold tracking-[0.25em] uppercase bg-white text-grit-900 w-full sm:w-auto px-8 py-4 sm:py-5 hover:bg-white/80 transition-colors group/btn">
+                    <Link to={`/project/${project.id}`} className="inline-flex justify-center items-center gap-2 text-[0.6rem] sm:text-xs font-header font-bold tracking-[0.25em] uppercase bg-white text-grit-900 w-full sm:w-auto px-8 py-4 sm:py-5 hover:bg-white/80 transition-colors group/btn">
                       VIEW CASE STUDY
                       <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </a>
+                    </Link>
                   </div>
 
                 </div>
@@ -278,10 +279,10 @@ export default function CaseStudies() {
                     <p className="text-xs font-body text-white/50 leading-relaxed mb-5">
                       {project.description}
                     </p>
-                    <a href="#" className="inline-flex items-center gap-1.5 text-[0.55rem] font-header font-bold tracking-[0.25em] uppercase text-white border border-white/40 px-4 py-2 hover:bg-white hover:text-grit-900 transition-all duration-300 group/btn">
+                    <Link to={`/project/${project.id}`} className="inline-flex items-center gap-1.5 text-[0.55rem] font-header font-bold tracking-[0.25em] uppercase text-white border border-white/40 px-4 py-2 hover:bg-white hover:text-grit-900 transition-all duration-300 group/btn">
                       VIEW CASE STUDY
                       <ArrowUpRight className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
 

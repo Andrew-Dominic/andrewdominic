@@ -13,6 +13,9 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    // Reset native scroll BEFORE initializing Lenis to prevent inheriting scroll position from previous routes
+    window.scrollTo(0, 0);
+
     // Initialize Lenis with premium settings
     const lenis = new Lenis({
       duration: 1.2,

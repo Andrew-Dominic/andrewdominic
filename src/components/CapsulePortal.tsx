@@ -18,6 +18,8 @@ export default function CapsulePortal() {
   const capsuleLayerRef = useRef<HTMLDivElement>(null);
   const desktopPlaceholderRef = useRef<HTMLSpanElement>(null);
   const mobilePlaceholderRef = useRef<HTMLSpanElement>(null);
+  const whiteFillRef = useRef<HTMLDivElement>(null);
+  const imageFillRef = useRef<HTMLDivElement>(null);
 
   // ── Hero element refs (for fade/move) ──
   const ditherRef = useRef<HTMLDivElement>(null);
@@ -49,19 +51,19 @@ export default function CapsulePortal() {
     const placeholder = isDesktop
       ? desktopPlaceholderRef.current
       : mobilePlaceholderRef.current;
-    const viewport = viewportRef.current;
-    if (!placeholder || !viewport) return null;
+    const capsuleLayer = capsuleLayerRef.current;
+    if (!placeholder || !capsuleLayer) return null;
 
     const pRect = placeholder.getBoundingClientRect();
+    const cRect = capsuleLayer.getBoundingClientRect();
 
-    // The capsule layer is forced to 100vw/100vh and centered to the screen.
-    // Therefore, its edges perfectly align with the browser window edges.
-    // We compute insets directly from the window boundaries.
+    // Compute insets strictly relative to the capsule layer's actual position
+    // This prevents jumps when resizing or refreshing while scrolled
     return {
-      top: pRect.top,
-      left: pRect.left,
-      bottom: window.innerHeight - pRect.bottom,
-      right: window.innerWidth - pRect.right,
+      top: pRect.top - cRect.top,
+      left: pRect.left - cRect.left,
+      bottom: cRect.bottom - pRect.bottom,
+      right: cRect.right - pRect.right,
     };
   }, []);
 
@@ -94,6 +96,27 @@ export default function CapsulePortal() {
           clipPath: `inset(${insets.top}px ${insets.right}px ${insets.bottom}px ${insets.left}px round 9999px)`,
           visibility: "visible",
         });
+
+        const cWidth = capsuleLayer.getBoundingClientRect().width;
+        const startRightInset = cWidth - insets.left;
+        gsap.set([whiteFillRef.current, imageFillRef.current], {
+          clipPath: `inset(0px ${startRightInset}px 0px 0px)`
+        });
+
+        gsap.timeline()
+          .to(whiteFillRef.current, {
+            clipPath: `inset(0px 0px 0px 0px)`,
+            duration: 0.6,
+            ease: "power3.inOut"
+          })
+          .to(imageFillRef.current, {
+            clipPath: `inset(0px 0px 0px 0px)`,
+            duration: 0.6,
+            ease: "power3.inOut",
+            onComplete: () => {
+              gsap.set([whiteFillRef.current, imageFillRef.current], { clearProps: "clipPath" });
+            }
+          }, "-=0.35");
 
         // Proxy object for GSAP to tween clip-path values
         const clip = { ...insets, radius: window.innerHeight / 2 };
@@ -171,6 +194,27 @@ export default function CapsulePortal() {
           clipPath: `inset(${insets.top}px ${insets.right}px ${insets.bottom}px ${insets.left}px round 9999px)`,
           visibility: "visible",
         });
+
+        const cWidth = capsuleLayer.getBoundingClientRect().width;
+        const startRightInset = cWidth - insets.left;
+        gsap.set([whiteFillRef.current, imageFillRef.current], {
+          clipPath: `inset(0px ${startRightInset}px 0px 0px)`
+        });
+
+        gsap.timeline()
+          .to(whiteFillRef.current, {
+            clipPath: `inset(0px 0px 0px 0px)`,
+            duration: 0.6,
+            ease: "power3.inOut"
+          })
+          .to(imageFillRef.current, {
+            clipPath: `inset(0px 0px 0px 0px)`,
+            duration: 0.6,
+            ease: "power3.inOut",
+            onComplete: () => {
+              gsap.set([whiteFillRef.current, imageFillRef.current], { clearProps: "clipPath" });
+            }
+          }, "-=0.35");
 
         const clip = { ...insets, radius: window.innerHeight / 2 };
 
@@ -439,15 +483,18 @@ export default function CapsulePortal() {
 
         {/* ── CAPSULE MEDIA LAYER ── */}
         <div ref={capsuleLayerRef} className="capsule-portal__capsule">
-          <img
-            src={tenorGif}
-            className="capsule-portal__capsule-media"
-            alt=""
-            aria-hidden="true"
-          />
+          <div ref={whiteFillRef} className="absolute inset-0 bg-white" style={{ zIndex: 1 }} />
+          <div ref={imageFillRef} className="absolute inset-0" style={{ zIndex: 2 }}>
+            <img
+              src={tenorGif}
+              className="capsule-portal__capsule-media"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
           
           {/* ── DARK OVERLAY ── */}
-          <div ref={darkOverlayRef} className="capsule-portal__dark-overlay" />
+          <div ref={darkOverlayRef} className="capsule-portal__dark-overlay" style={{ zIndex: 3 }} />
         </div>
 
         {/* ── CINEMATIC METRICS ── */}

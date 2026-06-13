@@ -98,15 +98,14 @@ function MenuItem({ link, text, logos = [], speed = 100, textColor, marqueeBgCol
 
   return (
     <div className="menu__item" ref={itemRef} style={{ borderColor }}>
-      <a
-        className="menu__item-link font-poster tracking-[-0.02em] md:text-[5vh] text-[4vh]"
-        href={link}
+      <div
+        className="menu__item-link font-helvetica tracking-[-0.02em] md:text-[5vh] text-[4vh] cursor-default"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
       >
         {text}
-      </a>
+      </div>
       <div className="marquee" ref={marqueeRef} style={{ backgroundColor: marqueeBgColor }}>
         <div className="marquee__inner-wrap flex items-center h-full">
           <div className="marquee__inner w-full flex items-center h-full" ref={marqueeInnerRef}>
@@ -121,7 +120,7 @@ function MenuItem({ link, text, logos = [], speed = 100, textColor, marqueeBgCol
                 scaleOnHover={true}
                 fadeOut={false}
                 renderItem={(item, key) => (
-                  <div key={key} className="flex items-center gap-3 font-header tracking-[0.05em] py-2" style={{ color: marqueeTextColor }}>
+                  <div key={key} className="flex items-center gap-3 font-helvetica tracking-[0.05em] py-2" style={{ color: marqueeTextColor }}>
                     <span className="text-3xl md:text-5xl flex items-center justify-center">{item.node}</span>
                     <span className="font-bold text-xl md:text-3xl uppercase whitespace-nowrap">{item.title}</span>
                   </div>
